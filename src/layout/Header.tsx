@@ -15,6 +15,9 @@ const Header: React.FC = () => {
 
           <HStack spacing={8} alignItems="center">
             <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
+              <RouterLink to="/posters" style={{ textDecoration: 'none' }}>
+                <Box px={2} py={1} rounded="md" _hover={{ textDecoration: 'none', bg: 'gray.700' }} color="white">Posters</Box>
+              </RouterLink>
               <RouterLink to="/" style={{ textDecoration: 'none' }}>
                 <Box px={2} py={1} rounded="md" _hover={{ textDecoration: 'none', bg: 'gray.700' }} color="white">Home</Box>
               </RouterLink>
@@ -39,6 +42,9 @@ const Header: React.FC = () => {
         {isOpen && (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as="nav" spacing={4}>
+              <RouterLink to="/posters" style={{ textDecoration: 'none' }}>
+                <Box color="white">Posters</Box>
+              </RouterLink>
               <RouterLink to="/" style={{ textDecoration: 'none' }}>
                 <Box color="white">Home</Box>
               </RouterLink>
