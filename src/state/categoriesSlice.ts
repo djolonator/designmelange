@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { couldStartTrivia } from 'typescript';
 
 
 interface Category {

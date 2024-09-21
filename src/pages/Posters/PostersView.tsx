@@ -5,7 +5,7 @@ interface PostersViewProps {
 }
 
 const PostersView: React.FC<PostersViewProps> = () =>{
-
+    
     return(
         <Box>
 

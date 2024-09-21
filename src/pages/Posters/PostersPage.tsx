@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../../state/categoriesSlice';
 import { Box, Text, Grid, GridItem } from '@chakra-ui/react';
@@ -9,6 +9,9 @@ import CategoryItem from '../../components/CategoryListItem'
 const Posters: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const { items, loading, error } = useSelector((state: RootState) => state.categories);
+
+  const [categoryId, setCategoryId] = useState(0);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     dispatch(fetchCategories());
