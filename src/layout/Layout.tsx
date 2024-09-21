@@ -12,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <Box>
       <Header />
       <Box 
-        maxW={{ base: "100%", md: "100%", lg: "70%" }} 
+        maxW={{ base: "100%", md: "100%", lg: "100%", xl: "70%" }} 
         mx="auto" 
         p={10}
       >

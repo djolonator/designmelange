@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
         wrap="wrap"
         justify="space-between"
         align="start"
-        maxW={{ base: "100%", md: "100%", lg: "70%" }} // Full width on medium and small screens, 70% on large screens
+        maxW={{ base: "100%", md: "100%", lg: "100%", xl: "70%" }}  // Full width on medium and small screens, 70% on large screens
         mx="auto"
         p={4}
       >

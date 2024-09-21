@@ -9,7 +9,7 @@ const Header: React.FC = () => {
 
   return (
     <Box bg="gray.800" px={4} width="100%">
-      <Box  maxW={{ base: "100%", md: "100%", lg: "70%" }} mx="auto">
+      <Box  maxW={{ base: "100%", md: "100%", lg: "100%", xl: "70%" }}  mx="auto">
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <Box color="white">Logo</Box>
 
