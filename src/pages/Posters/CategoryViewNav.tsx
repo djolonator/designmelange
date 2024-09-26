@@ -26,7 +26,7 @@ const CategoryViewNav: React.FC<CategoryViewNavProps> = ({ onCategoryClick }) =>
         <CategoryItem
           key={category.designCategoryId}
           category={category}
-          onCategoryClick={() => onCategoryClick(category.designCategoryId)}  // Handle click
+          onCategoryClick={() => onCategoryClick(category.designCategoryId)} 
         />
       ))}
     </>

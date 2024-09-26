@@ -6,10 +6,10 @@ import CategoryViewNav from './CategoryViewNav';
 const Posters: React.FC = () => {
 
   
-  const [categoryId, setCategoryId] = useState<number>(0);  // Manage categoryId here
+  const [categoryId, setCategoryId] = useState<number>(0); 
 
   const handleCategoryClick = (id: number) => {
-    setCategoryId(id);  // Update selected categoryId
+    setCategoryId(id);  
   };
 
   return (

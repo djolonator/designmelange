@@ -14,14 +14,14 @@ const PostersViewMain: React.FC<PostersViewProps> = ({designCategoryId}) =>{
 
   useEffect(() => {
 
-    if (designCategoryId === 0) return;  // Prevent API call without a category
+    if (designCategoryId === 0) return; 
 
     const fetchDesigns = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/designsByCategory/'+ designCategoryId); // API call
+        const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/designsByCategory/'+ designCategoryId); 
         const data = await response.json();
         setDesigns(data);
       } catch (error) {
