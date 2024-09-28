@@ -3,7 +3,7 @@ import { Box, Grid, GridItem } from '@chakra-ui/react';
 import PostersViewMain from './PostersViewMain';
 import CategoryViewNav from './CategoryViewNav';
 
-const Posters: React.FC = () => {
+const PostersPage: React.FC = () => {
 
   
   const [categoryId, setCategoryId] = useState<number>(0); 
@@ -53,4 +53,4 @@ const Posters: React.FC = () => {
   );
 };
 
-export default Posters;
+export default PostersPage;
