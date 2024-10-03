@@ -20,6 +20,7 @@ const PostersViewMain: React.FC<PostersViewProps> = ({designCategoryId}) =>{
 
   useEffect(() => {
     setPage(0);
+    setDesigns([]);
 }, [designCategoryId]);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const PostersViewMain: React.FC<PostersViewProps> = ({designCategoryId}) =>{
       try {
         const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/designsByCategory/'+ designCategoryId + '?page=' + page); 
         const data = await response.json();
-        setDesigns(data);
+        setDesigns(designs => [...designs, ...data]);
       } catch (error) {
         setError('Failed to fetch designs');
       } finally {
