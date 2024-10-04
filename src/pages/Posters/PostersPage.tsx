@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import PostersViewMain from './PostersViewMain';
 import CategoryViewNav from './CategoryViewNav';
+import { CategoryItem } from '../../types/intefaces'; 
 
 const PostersPage: React.FC = () => {
 
-  
-  const [categoryId, setCategoryId] = useState<number>(0); 
+  const [selectedCategory, setSelectedCategory] = useState<CategoryItem>();
 
-  const handleCategoryClick = (id: number) => {
-    setCategoryId(id);  
+  const handleCategoryClick = (selectedCategory: CategoryItem) => {
+    setSelectedCategory(selectedCategory);  
   };
 
   return (
@@ -43,7 +43,7 @@ const PostersPage: React.FC = () => {
         <CategoryViewNav onCategoryClick={handleCategoryClick} />
         </GridItem>
         <GridItem pl='2' bg='green.300' area={'main'}>
-          <PostersViewMain designCategoryId={categoryId}></PostersViewMain>
+          <PostersViewMain selectedCategory={selectedCategory}></PostersViewMain>
         </GridItem>
         <GridItem pl='2' bg='blue.300' area={'footer'}>
           Footer

@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../../state/categoriesSlice';
 import { RootState, AppDispatch } from '../../state/store';
-import CategoryItem from '../../components/CategoryListItem'
+import CategoryListItem from '../../components/CategoryListItem';
+import { CategoryItem } from '../../types/intefaces'; 
 
 interface CategoryViewNavProps {
-    onCategoryClick: (id: number) => void;
+    onCategoryClick: (selectedCategory: CategoryItem) => void;
   }
 
 const CategoryViewNav: React.FC<CategoryViewNavProps> = ({ onCategoryClick }) => {
@@ -23,10 +24,10 @@ const CategoryViewNav: React.FC<CategoryViewNavProps> = ({ onCategoryClick }) =>
   return (
     <>
       {items.map(category => (
-        <CategoryItem
+        <CategoryListItem
           key={category.designCategoryId}
           category={category}
-          onCategoryClick={() => onCategoryClick(category.designCategoryId)} 
+          onCategoryClick={() => onCategoryClick(category)} 
         />
       ))}
     </>
