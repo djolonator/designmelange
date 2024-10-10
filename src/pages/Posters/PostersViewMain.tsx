@@ -19,11 +19,10 @@ const PostersViewMain: React.FC<PostersViewProps> = ({selectedCategory}) =>{
   }
 
   useEffect(() => {
-    setDesigns([]); // Clear designs when category changes
-    setPage(0); // Reset page to 0
+    setDesigns([]);
+    setPage(0); 
   }, [selectedCategory]);
 
-  // Effect to fetch designs when selectedCategory or page changes
   useEffect(() => {
     if (selectedCategory && selectedCategory.designCategoryId !== 0) {
       const fetchDesigns = async () => {
@@ -33,7 +32,7 @@ const PostersViewMain: React.FC<PostersViewProps> = ({selectedCategory}) =>{
         try {
           const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/designsByCategory/' + selectedCategory.designCategoryId + '?page=' + page); 
           const data = await response.json();
-          setDesigns(prevDesigns => page === 0 ? data : [...prevDesigns, ...data]); // Reset designs or append based on page
+          setDesigns(prevDesigns => page === 0 ? data : [...prevDesigns, ...data]); 
         } catch (error) {
           setError('Failed to fetch designs');
         } finally {
@@ -43,7 +42,6 @@ const PostersViewMain: React.FC<PostersViewProps> = ({selectedCategory}) =>{
       if (selectedCategory.designCount - designs.length > 0){
         fetchDesigns();
       }
-      
     }
   }, [selectedCategory, page]);
 

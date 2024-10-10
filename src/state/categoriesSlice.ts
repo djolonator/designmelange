@@ -23,7 +23,7 @@ const initialState: CategoriesState = {
 export const fetchCategories = createAsyncThunk<Category[], void>(
   'categories/fetchCategories',
   async () => {
-    const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/designCategories');
+    const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/categories');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
