@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Text } from '@chakra-ui/react';
-import { CategoryItem } from '../types/intefaces'; 
+import { CategoryItem } from '../lib/types/intefaces'; 
 
 interface CategoryLinkProps {
   category: CategoryItem;

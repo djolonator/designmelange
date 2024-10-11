@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import PostersViewMain from './PostersViewMain';
 import CategoryViewNav from './CategoryViewNav';
-import { CategoryItem } from '../../types/intefaces'; 
+import { CategoryItem } from '../../lib/types/intefaces'; 
 
 const PostersPage: React.FC = () => {
 

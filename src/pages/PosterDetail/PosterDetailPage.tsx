@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Select, Grid, Text } from "@chakra-ui/react";
-import { DesignItem } from '../../types/intefaces'; 
+import { Box, Select, Grid, Text, Image, Button } from "@chakra-ui/react";
+import { DesignItem } from "../../lib/types/intefaces";
+import { productVariantsSelect } from "../../lib/constants/constants";
+import ShoppingCartDrawer from "../../components/ShoppingCartDrawer";
 
 const PosterDetailPage: React.FC = () => {
   const { designId } = useParams<{ designId: string }>();
@@ -23,23 +25,32 @@ const PosterDetailPage: React.FC = () => {
   }, [designId]);
 
   return (
-    <Grid templateColumns="3fr 4fr" gap={4}>
-    <Box bg="blue.500" p={4}>
-      
-    </Box>
-    <Box bg="green.500" p={4}>
+    <Grid templateColumns="1fr 1fr" gap={4}>
+      <Box bg="blue.500" p={4}>
+        <Grid templateColumns="2fr 9fr" gap={1}>
+          <Box>
+            <Image src="https://i.ibb.co/vBmRCwb/Moscow.jpg"></Image>
+            <Image src="https://i.ibb.co/vBmRCwb/Moscow.jpg"></Image>
+          </Box>
+          <Box>
+            <Image src="https://i.ibb.co/vBmRCwb/Moscow.jpg"></Image>
+          </Box>
+        </Grid>
+      </Box>
+      <Box bg="green.500" p={4}>
         <Text>{design?.designName}</Text>
-        <Select placeholder="Select option">
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+        <Select placeholder="Select an option">
+          {productVariantsSelect.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </Select>
+       <ShoppingCartDrawer></ShoppingCartDrawer>
         <Text>Description</Text>
         <Text>{design?.description}</Text>
-    </Box>
-  </Grid>
-      
-    
+      </Box>
+    </Grid>
   );
 };
 

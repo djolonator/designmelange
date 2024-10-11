@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories } from '../../state/categoriesSlice';
-import { RootState, AppDispatch } from '../../state/store';
+import { fetchCategories } from '../../lib/state/categoriesSlice';
+import { RootState, AppDispatch } from '../../lib/state/store';
 import CategoryListItem from '../../components/CategoryListItem';
-import { CategoryItem } from '../../types/intefaces'; 
+import { CategoryItem } from '../../lib/types/intefaces'; 
 
 interface CategoryViewNavProps {
     onCategoryClick: (selectedCategory: CategoryItem) => void;

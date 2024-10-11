@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
-import {store} from './state/store'
+import {store} from './lib/state/store'
 
 
 const root = ReactDOM.createRoot(
