@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../../lib/state/categoriesSlice';
 import { RootState, AppDispatch } from '../../lib/state/store';
 import CategoryListItem from '../../components/CategoryListItem';
-import { CategoryItem } from '../../lib/types/intefaces'; 
+import { CategoryItem } from '../../lib/types/models'; 
 
 interface CategoryViewNavProps {
     onCategoryClick: (selectedCategory: CategoryItem) => void;

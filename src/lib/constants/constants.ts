@@ -1,5 +1,5 @@
 export const productVariantsSelect = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
+    { value: 1, label: '11x14 in' },
+    { value: 2, label: '16x20 in' },
+    { value: 3, label: '20x30 in' },
   ];

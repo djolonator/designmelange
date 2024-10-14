@@ -1,5 +1,5 @@
 import {Card, CardBody, Image, Text, Stack, Divider, CardFooter, ButtonGroup, Button, Heading } from "@chakra-ui/react";
-import { DesignItem } from '../lib/types/intefaces'; 
+import { DesignItem } from '../lib/types/models'; 
 import { useNavigate} from 'react-router-dom';
 
 interface DesignCardProps {

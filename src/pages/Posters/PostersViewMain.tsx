@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, SimpleGrid } from '@chakra-ui/react';
 import DesignCard from '../../components/DesignCard';
-import { CategoryItem } from '../../lib/types/intefaces'; 
+import { CategoryItem } from '../../lib/types/models'; 
 
 interface PostersViewProps {
   selectedCategory: CategoryItem | undefined;

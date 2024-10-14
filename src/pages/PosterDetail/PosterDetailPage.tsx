@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Select, Grid, Text, Image, Button } from "@chakra-ui/react";
-import { DesignItem } from "../../lib/types/intefaces";
+import { DesignItem } from "../../lib/types/models";
 import { productVariantsSelect } from "../../lib/constants/constants";
 import ShoppingCartDrawer from "../../components/ShoppingCartDrawer";
 

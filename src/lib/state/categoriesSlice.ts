@@ -1,11 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {Category} from '../types/models'
 
 
-interface Category {
-  designCategoryId: number;
-  designCategoryName: string;
-  designCount: number;
-}
+
 
 interface CategoriesState {
   items: Category[];
