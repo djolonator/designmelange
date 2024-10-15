@@ -4,7 +4,6 @@ export type CategoryItem = {
     designCount: number;
   }
 
-
 export type DesignItem = {
   designName: string;
   description: string;

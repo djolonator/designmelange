@@ -5,7 +5,7 @@ interface CartItemCardProps {
   cartItem: CartItem
 }
 
-const CartItemCard: React.FC = () => {
+const CartItemCard: React.FC<CartItemCardProps> = ({cartItem}) => {
   return (
     <Card
       direction={{ base: "column", sm: "row" }}

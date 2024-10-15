@@ -3,6 +3,7 @@ import { Box, Flex, HStack, IconButton, Stack } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as RouterLink } from 'react-router-dom'; // Import Link from react-router-dom
 import { useDisclosure } from '@chakra-ui/react';
+import ShoppingCartDrawer from "../components/ShoppingCartDrawer";
 
 const Header: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -11,7 +12,7 @@ const Header: React.FC = () => {
     <Box bg="gray.800" px={4} width="100%">
       <Box  maxW={{ base: "100%", md: "100%", lg: "100%", xl: "70%" }}  mx="auto">
         <Flex h={16} alignItems="center" justifyContent="space-between">
-          <Box color="white">Logo</Box>
+          <Box color="white"><ShoppingCartDrawer></ShoppingCartDrawer></Box>
 
           <HStack spacing={8} alignItems="center">
             <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>

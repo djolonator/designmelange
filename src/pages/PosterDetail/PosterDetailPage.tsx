@@ -3,12 +3,33 @@ import { useParams } from "react-router-dom";
 import { Box, Select, Grid, Text, Image, Button } from "@chakra-ui/react";
 import { DesignItem } from "../../lib/types/models";
 import { productVariantsSelect } from "../../lib/constants/constants";
-import ShoppingCartDrawer from "../../components/ShoppingCartDrawer";
+import {addItem } from "../../lib/state/cartSlice";
+import {useDispatch } from "react-redux";
 
 const PosterDetailPage: React.FC = () => {
   const { designId } = useParams<{ designId: string }>();
   const [design, setDesign] = useState<DesignItem | null>(null);
+  const [selectedOption, setSelectedOption] = useState<number>(0);
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(Number(event.target.value));
+  };
+  const dispatch = useDispatch();
 
+  const handleAddToCart = () => {
+    if (design && selectedOption) {
+      const cartItem = {
+        designId: design.designId,
+        designImgUrl: design.designImgUrl, 
+        dimensionId: selectedOption,
+        quantity: 1 
+      };
+      dispatch(addItem(cartItem));
+    }else{
+      //poruka da se mora izabrati velicina postera;
+    }
+  };
+
+  
   useEffect(() => {
     const fetchDesign = async () => {
       try {
@@ -39,14 +60,14 @@ const PosterDetailPage: React.FC = () => {
       </Box>
       <Box bg="green.500" p={4}>
         <Text>{design?.designName}</Text>
-        <Select placeholder="Select an option">
+        <Select placeholder="Select an option" onChange={handleChange}>
           {productVariantsSelect.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
         </Select>
-       <ShoppingCartDrawer></ShoppingCartDrawer>
+        <Button colorScheme="teal" onClick={handleAddToCart}>Add to cart</Button>
         <Text>Description</Text>
         <Text>{design?.description}</Text>
       </Box>

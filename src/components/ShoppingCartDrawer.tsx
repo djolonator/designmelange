@@ -1,60 +1,39 @@
-import {
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  Button,
-} from "@chakra-ui/react";
-import React, { useRef } from "react";
+import {Drawer,DrawerBody,DrawerFooter,DrawerHeader,DrawerOverlay,DrawerContent,DrawerCloseButton,useDisclosure,Button,} from "@chakra-ui/react";
 import CartItemCard from "./CartItemCard";
-import { useSelector, useDispatch } from "react-redux";
-import { removeItem, clearCart, addItem } from "../lib/state/cartSlice";
-
+import { useSelector } from "react-redux";
+import { CartItem } from '../lib/types/models'; 
 
 const ShoppingCartDrawer: React.FC = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef<HTMLButtonElement>(null);
-
-  const items = useSelector((state: any) => state.cart.items);
-  const dispatch = useDispatch();
-
- 
-  const handleRemoveItem = (designId: number, dimensionId: number) => {
-    dispatch(removeItem({ designId, dimensionId }));
-  };
-
-  const handleClearCart = () => {
-    dispatch(clearCart());
-  };
+  const cartItems = useSelector((state: any) => state.cart.items);
 
   return (
     <>
-      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-        Add to cart
+      <Button colorScheme="teal" onClick={onOpen}>
+        Cart
       </Button>
       <Drawer
         isOpen={isOpen}
         placement="right"
         onClose={onClose}
-        finalFocusRef={btnRef}
         size={"md"}
       >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Your items</DrawerHeader>
-
           <DrawerBody>
-            <CartItemCard></CartItemCard>
+          {cartItems.length > 0 ? (
+              cartItems.map((item: CartItem) => (
+                <CartItemCard key={item.designId+item.dimensionId} cartItem={item} />
+              ))
+            ) : (
+              <p>Your cart is empty.</p>
+            )}
           </DrawerBody>
-
           <DrawerFooter>
-            <Button colorScheme="blue">Checkout</Button>
+            <Button colorScheme="teal">Checkout</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
