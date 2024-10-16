@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { Box, Select, Grid, Text, Image, Button } from "@chakra-ui/react";
 import { DesignItem } from "../../lib/types/models";
 import { productVariantsSelect } from "../../lib/constants/constants";
-import {addItem } from "../../lib/state/cartSlice";
-import {useDispatch } from "react-redux";
+import { addItemToCart } from "../../lib/state/cartSlice";
+import { useDispatch } from "react-redux";
 
 const PosterDetailPage: React.FC = () => {
   const { designId } = useParams<{ designId: string }>();
@@ -16,14 +16,16 @@ const PosterDetailPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    if (design && selectedOption) {
+    if (design && selectedOption !== 0) {
       const cartItem = {
+        designName: design.designName,
+        description: design.description,
         designId: design.designId,
         designImgUrl: design.designImgUrl, 
         dimensionId: selectedOption,
         quantity: 1 
       };
-      dispatch(addItem(cartItem));
+      dispatch(addItemToCart(cartItem));
     }else{
       //poruka da se mora izabrati velicina postera;
     }

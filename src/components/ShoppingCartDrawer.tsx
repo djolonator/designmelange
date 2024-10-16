@@ -2,11 +2,18 @@ import {Drawer,DrawerBody,DrawerFooter,DrawerHeader,DrawerOverlay,DrawerContent,
 import CartItemCard from "./CartItemCard";
 import { useSelector } from "react-redux";
 import { CartItem } from '../lib/types/models'; 
+import { useDispatch } from "react-redux";
+import { clearCart } from "../lib/state/cartSlice";
 
 const ShoppingCartDrawer: React.FC = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cartItems = useSelector((state: any) => state.cart.items);
+  const dispatch = useDispatch();
+
+  const handleCLearCartClick = () => {
+    dispatch(clearCart())
+  }
 
   return (
     <>
@@ -33,6 +40,7 @@ const ShoppingCartDrawer: React.FC = () => {
             )}
           </DrawerBody>
           <DrawerFooter>
+          <Button onClick={handleCLearCartClick} colorScheme="red">Clear cart</Button>
             <Button colorScheme="teal">Checkout</Button>
           </DrawerFooter>
         </DrawerContent>

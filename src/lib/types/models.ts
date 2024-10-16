@@ -13,6 +13,8 @@ export type DesignItem = {
 }
 
 export type CartItem = {
+  designName: string,
+  description: string,
   designId: number;
   designImgUrl: string;
   dimensionId: number;

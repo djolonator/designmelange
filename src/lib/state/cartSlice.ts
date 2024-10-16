@@ -13,7 +13,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<CartItem>) => {
+    addItemToCart: (state, action: PayloadAction<CartItem>) => {
       const existingItem = state.items.find(
         item => item.designId === action.payload.designId && item.dimensionId === action.payload.dimensionId
       );
@@ -23,7 +23,7 @@ const cartSlice = createSlice({
         state.items.push(action.payload);
       }
     },
-    removeItem: (state, action: PayloadAction<{ designId: number; dimensionId: number }>) => {
+    removeItemFromCart: (state, action: PayloadAction<{ designId: number; dimensionId: number }>) => {
       state.items = state.items.filter(
         item => item.designId !== action.payload.designId || item.dimensionId !== action.payload.dimensionId
       );
@@ -31,20 +31,20 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = [];
     },
-    addQuantity: (state, action: PayloadAction<{ designId: number; dimensionId: number; quantity: number }>) => {
+    addQuantityToItemInCart: (state, action: PayloadAction<{ designId: number; dimensionId: number; }>) => {
       const existingItem = state.items.find(
         item => item.designId === action.payload.designId && item.dimensionId === action.payload.dimensionId
       );
       if (existingItem) {
-        existingItem.quantity += action.payload.quantity;
+        existingItem.quantity += 1;
       }
     },
-    removeQuantity: (state, action: PayloadAction<{ designId: number; dimensionId: number; quantity: number }>) => {
+    removeQuantityFromItemInCart: (state, action: PayloadAction<{ designId: number; dimensionId: number; }>) => {
       const existingItem = state.items.find(
         item => item.designId === action.payload.designId && item.dimensionId === action.payload.dimensionId
       );
-      if (existingItem) {
-        existingItem.quantity -= action.payload.quantity;
+      if (existingItem && existingItem.quantity !== 1) {
+        existingItem.quantity -= 1;
         if (existingItem.quantity <= 0) {
           state.items = state.items.filter(
             item => item.designId !== existingItem.designId || item.dimensionId !== existingItem.dimensionId
@@ -55,15 +55,13 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem, clearCart, addQuantity, removeQuantity } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, clearCart, addQuantityToItemInCart, removeQuantityFromItemInCart } = cartSlice.actions;
 export default cartSlice.reducer;
 
 
 
 
-// const handleRemoveItem = (designId: number, dimensionId: number) => {
-//   dispatch(removeItem({ designId, dimensionId }));
-// };
+
 // const handleClearCart = () => {
 //   dispatch(clearCart());
 // };
