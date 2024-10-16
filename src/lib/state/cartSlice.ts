@@ -57,11 +57,3 @@ const cartSlice = createSlice({
 
 export const { addItemToCart, removeItemFromCart, clearCart, addQuantityToItemInCart, removeQuantityFromItemInCart } = cartSlice.actions;
 export default cartSlice.reducer;
-
-
-
-
-
-// const handleClearCart = () => {
-//   dispatch(clearCart());
-// };
