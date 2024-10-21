@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { CartItem } from '../lib/types/models'; 
 import { useDispatch } from "react-redux";
 import { clearCart } from "../lib/state/cartSlice";
+import { Link as RouterLink } from 'react-router-dom'; 
 
 const ShoppingCartDrawer: React.FC = () => {
 
@@ -41,7 +42,10 @@ const ShoppingCartDrawer: React.FC = () => {
           </DrawerBody>
           <DrawerFooter>
           <Button onClick={handleCLearCartClick} colorScheme="red">Clear cart</Button>
+          <RouterLink to="/checkout">
             <Button colorScheme="teal">Checkout</Button>
+          </RouterLink>
+          
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
