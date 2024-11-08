@@ -97,7 +97,7 @@ const CheckoutPage: React.FC = () => {
                     <Button type="submit">Submit</Button>
                 </FormControl>
                 <Box>
-                    cart editor
+                    cart items-editor
                 </Box>
             </Grid>
         </form>

@@ -22,7 +22,7 @@ const PosterDetailPage: React.FC = () => {
         description: design.description,
         designId: design.designId,
         designImgUrl: design.designImgUrl, 
-        dimensionId: selectedOption,
+        productId: selectedOption,
         quantity: 1 
       };
       dispatch(addItemToCart(cartItem));

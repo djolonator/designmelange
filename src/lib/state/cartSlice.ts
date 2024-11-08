@@ -15,7 +15,7 @@ const cartSlice = createSlice({
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
       const existingItem = state.items.find(
-        item => item.designId === action.payload.designId && item.dimensionId === action.payload.dimensionId
+        item => item.designId === action.payload.designId && item.productId === action.payload.productId
       );
       if (existingItem) {
         existingItem.quantity += action.payload.quantity;
@@ -23,31 +23,31 @@ const cartSlice = createSlice({
         state.items.push(action.payload);
       }
     },
-    removeItemFromCart: (state, action: PayloadAction<{ designId: number; dimensionId: number }>) => {
+    removeItemFromCart: (state, action: PayloadAction<{ designId: number; productId: number }>) => {
       state.items = state.items.filter(
-        item => item.designId !== action.payload.designId || item.dimensionId !== action.payload.dimensionId
+        item => item.designId !== action.payload.designId || item.productId !== action.payload.productId
       );
     },
     clearCart: (state) => {
       state.items = [];
     },
-    addQuantityToItemInCart: (state, action: PayloadAction<{ designId: number; dimensionId: number; }>) => {
+    addQuantityToItemInCart: (state, action: PayloadAction<{ designId: number; productId: number; }>) => {
       const existingItem = state.items.find(
-        item => item.designId === action.payload.designId && item.dimensionId === action.payload.dimensionId
+        item => item.designId === action.payload.designId && item.productId === action.payload.productId
       );
       if (existingItem) {
         existingItem.quantity += 1;
       }
     },
-    removeQuantityFromItemInCart: (state, action: PayloadAction<{ designId: number; dimensionId: number; }>) => {
+    removeQuantityFromItemInCart: (state, action: PayloadAction<{ designId: number; productId: number; }>) => {
       const existingItem = state.items.find(
-        item => item.designId === action.payload.designId && item.dimensionId === action.payload.dimensionId
+        item => item.designId === action.payload.designId && item.productId === action.payload.productId
       );
       if (existingItem && existingItem.quantity !== 1) {
         existingItem.quantity -= 1;
         if (existingItem.quantity <= 0) {
           state.items = state.items.filter(
-            item => item.designId !== existingItem.designId || item.dimensionId !== existingItem.dimensionId
+            item => item.designId !== existingItem.designId || item.productId !== existingItem.productId
           );
         }
       }

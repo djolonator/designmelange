@@ -11,7 +11,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({cartItem}) => {
 
   const createPayload = () => ({
     designId: cartItem.designId,
-    dimensionId: cartItem.dimensionId
+    productId: cartItem.productId
   });
   const dispatch = useDispatch();
 

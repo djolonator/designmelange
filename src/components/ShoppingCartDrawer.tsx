@@ -34,7 +34,7 @@ const ShoppingCartDrawer: React.FC = () => {
           <DrawerBody>
           {cartItems.length > 0 ? (
               cartItems.map((item: CartItem) => (
-                <CartItemCard key={item.designId+item.dimensionId} cartItem={item} />
+                <CartItemCard key={item.designId+item.productId} cartItem={item} />
               ))
             ) : (
               <p>Your cart is empty.</p>
