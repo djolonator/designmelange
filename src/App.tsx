@@ -5,9 +5,9 @@ import Home from './pages/Home';
 import Layout from './layout/Layout';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import Posters from './pages/posters/PostersPage'
-import PosterDetailPage from './pages/posterDetail/PosterDetailPage'
-import CheckoutPage from './pages/checkout/CheckoutPage';
+import Posters from './pages/Posters/PostersPage'
+import PosterDetailPage from './pages/PosterDetail/PosterDetailPage'
+import CheckoutPage from './pages/Checkout/CheckoutPage';
 
 const App: React.FC = () => {
   return (
