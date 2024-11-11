@@ -7,7 +7,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@paypal/react-paypal-js": "github:paypal/react-paypal-js",
+    "@paypal/react-paypal-js": "^8.7.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

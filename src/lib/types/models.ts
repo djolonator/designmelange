@@ -1,8 +1,8 @@
 export type CategoryItem = {
-    designCategoryId: number;
-    designCategoryName: string;
-    designCount: number;
-  }
+  designCategoryId: number;
+  designCategoryName: string;
+  designCount: number;
+}
 
 export type DesignItem = {
   designName: string;
@@ -25,4 +25,20 @@ export type Category = {
   designCategoryId: number;
   designCategoryName: string;
   designCount: number;
+}
+
+export type Checkout = {
+  recipient: Recipient,
+  cartItems: CartItem[]
+}
+
+export type Recipient = {
+  phone: string,
+  email: string,
+  country: string,
+  firstName: string,
+  lastName: string,
+  address: string,
+  city: string,
+  zip: string,
 }

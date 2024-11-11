@@ -21,6 +21,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "src/lib/types/paypal-react-paypal-js.d"  // Include this if you created the file here
   ]
 }
