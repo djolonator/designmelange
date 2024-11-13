@@ -3,17 +3,14 @@
 
 import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { Checkout } from "../lib/types/models";
+import { useDispatch, useSelector } from "react-redux";
 
-interface PaymentProps {
-    checkout: Checkout;
-  }
-
-const Payment: React.FC<PaymentProps> = ({checkout}) => {
+const Payment: React.FC = () => {
 // Renders errors or successfull transactions on the screen.
 // function Message({ content }) {
 //     return <p>{content}</p>;
 // }
+
 
 
     const initialOptions = {
@@ -28,7 +25,9 @@ const Payment: React.FC<PaymentProps> = ({checkout}) => {
     };
 
     const [message, setMessage] = useState("");
-
+    const dispatch = useDispatch();
+    const recipient = useSelector((state: any) => state.recipient);
+    const cartItems = useSelector((state: any) => state.cart.items);
 return (
 <>
 
@@ -42,16 +41,27 @@ return (
     }} 
     createOrder={async () => {
         try {
-            const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/checkout', {
+            console.log('createOrderFunction', JSON.stringify(recipient, null, 2));
+            const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/initiatecheckout', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 // use the "body" param to optionally pass additional order information
                 // like product ids and quantities
-                body: JSON.stringify(
-                    checkout
-                ),
+                body: JSON.stringify({
+                    recipient: {
+                      phone:recipient.phone,
+                      email: recipient.email,
+                      firstName: recipient.firstName,
+                      lastName: recipient.lastName,
+                      address: recipient.address,
+                      country: recipient.country,
+                      city: recipient.city,
+                      zip: recipient.zip,
+                    },
+                    cartItems: cartItems
+                  }),
             });
 
             const orderData = await response.json();
