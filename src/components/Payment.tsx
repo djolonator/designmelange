@@ -10,9 +10,6 @@ const Payment: React.FC = () => {
 // function Message({ content }) {
 //     return <p>{content}</p>;
 // }
-
-
-
     const initialOptions = {
         "clientId": "test",
         "enable-funding": "venmo",
@@ -25,7 +22,6 @@ const Payment: React.FC = () => {
     };
 
     const [message, setMessage] = useState("");
-    const dispatch = useDispatch();
     const recipient = useSelector((state: any) => state.recipient);
     const cartItems = useSelector((state: any) => state.cart.items);
 return (
