@@ -9,7 +9,7 @@ import { Link as RouterLink } from 'react-router-dom';
 const ShoppingCartDrawer: React.FC = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cartItems = useSelector((state: any) => state.cart.items);
+  const cartItems = useSelector((state: any) => state.cart.cartItems);
   const dispatch = useDispatch();
 
   const handleCLearCartClick = () => {

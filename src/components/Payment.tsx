@@ -1,9 +1,6 @@
-
-
-
 import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Payment: React.FC = () => {
 // Renders errors or successfull transactions on the screen.
@@ -23,7 +20,7 @@ const Payment: React.FC = () => {
 
     const [message, setMessage] = useState("");
     const recipient = useSelector((state: any) => state.recipient);
-    const cartItems = useSelector((state: any) => state.cart.items);
+    const cartItems = useSelector((state: any) => state.cart.cartItems);
 return (
 <>
 
@@ -37,7 +34,6 @@ return (
     }} 
     createOrder={async () => {
         try {
-            console.log('createOrderFunction', JSON.stringify(recipient, null, 2));
             const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/initiatecheckout', {
                 method: "POST",
                 headers: {
@@ -47,14 +43,14 @@ return (
                 // like product ids and quantities
                 body: JSON.stringify({
                     recipient: {
-                      phone:recipient.phone,
-                      email: recipient.email,
-                      firstName: recipient.firstName,
-                      lastName: recipient.lastName,
-                      address: recipient.address,
-                      country: recipient.country,
-                      city: recipient.city,
-                      zip: recipient.zip,
+                      phone:recipient.recipient.phone,
+                      email: recipient.recipient.email,
+                      firstName: recipient.recipient.firstName,
+                      lastName: recipient.recipient.lastName,
+                      address: recipient.recipient.address,
+                      country: recipient.recipient.country,
+                      city: recipient.recipient.city,
+                      zip: recipient.recipient.zip,
                     },
                     cartItems: cartItems
                   }),

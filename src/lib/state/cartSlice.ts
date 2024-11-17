@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartItem } from '../types/models';
 
 interface CartState {
-  items: CartItem[];
+  cartItems: CartItem[];
 }
 
 const initialState: CartState = {
-  items: [],
+  cartItems: [],
 };
 
 const cartSlice = createSlice({
@@ -14,25 +14,25 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
-      const existingItem = state.items.find(
+      const existingItem = state.cartItems.find(
         item => item.designId === action.payload.designId && item.productId === action.payload.productId
       );
       if (existingItem) {
         existingItem.quantity += action.payload.quantity;
       } else {
-        state.items.push(action.payload);
+        state.cartItems.push(action.payload);
       }
     },
     removeItemFromCart: (state, action: PayloadAction<{ designId: number; productId: number }>) => {
-      state.items = state.items.filter(
+      state.cartItems = state.cartItems.filter(
         item => item.designId !== action.payload.designId || item.productId !== action.payload.productId
       );
     },
     clearCart: (state) => {
-      state.items = [];
+      state.cartItems = [];
     },
     addQuantityToItemInCart: (state, action: PayloadAction<{ designId: number; productId: number; }>) => {
-      const existingItem = state.items.find(
+      const existingItem = state.cartItems.find(
         item => item.designId === action.payload.designId && item.productId === action.payload.productId
       );
       if (existingItem) {
@@ -40,13 +40,13 @@ const cartSlice = createSlice({
       }
     },
     removeQuantityFromItemInCart: (state, action: PayloadAction<{ designId: number; productId: number; }>) => {
-      const existingItem = state.items.find(
+      const existingItem = state.cartItems.find(
         item => item.designId === action.payload.designId && item.productId === action.payload.productId
       );
       if (existingItem && existingItem.quantity !== 1) {
         existingItem.quantity -= 1;
         if (existingItem.quantity <= 0) {
-          state.items = state.items.filter(
+          state.cartItems = state.cartItems.filter(
             item => item.designId !== existingItem.designId || item.productId !== existingItem.productId
           );
         }
