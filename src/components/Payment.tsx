@@ -21,9 +21,14 @@ const Payment: React.FC = () => {
     const [message, setMessage] = useState("");
     const recipient = useSelector((state: any) => state.recipient.recipient);
     const cartItems = useSelector((state: any) => state.cart.cartItems);
+
+
+    if (!recipient.email || !recipient.phone || !recipient.country || !recipient.firstName || !recipient.lastName || !recipient.address || !recipient.city || !recipient.zip) {
+        return <div>Please fill all fields</div>; // ovo cu videti kako da resim, bez ovog ifa po unosu podataka u formi na chekout pageu recipient je sve prazna string, tek kada se uradi back pa return, "upuni se"
+    }
+
 return (
 <>
-
 <PayPalScriptProvider options={initialOptions}>
 <PayPalButtons
     style={{
