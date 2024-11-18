@@ -17,6 +17,7 @@ const CheckoutPage: React.FC = () => {
         [name]: value,
       })
     );
+    console.log('change', name + ' ' + value);
   };
 
   return (

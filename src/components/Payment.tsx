@@ -19,7 +19,7 @@ const Payment: React.FC = () => {
     };
 
     const [message, setMessage] = useState("");
-    const recipient = useSelector((state: any) => state.recipient);
+    const recipient = useSelector((state: any) => state.recipient.recipient);
     const cartItems = useSelector((state: any) => state.cart.cartItems);
 return (
 <>
@@ -39,18 +39,16 @@ return (
                 headers: {
                     "Content-Type": "application/json",
                 },
-                // use the "body" param to optionally pass additional order information
-                // like product ids and quantities
                 body: JSON.stringify({
                     recipient: {
-                      phone:recipient.recipient.phone,
-                      email: recipient.recipient.email,
-                      firstName: recipient.recipient.firstName,
-                      lastName: recipient.recipient.lastName,
-                      address: recipient.recipient.address,
-                      country: recipient.recipient.country,
-                      city: recipient.recipient.city,
-                      zip: recipient.recipient.zip,
+                      phone:recipient.phone,
+                      email: recipient.email,
+                      firstName: recipient.firstName,
+                      lastName: recipient.lastName,
+                      address: recipient.address,
+                      country: recipient.country,
+                      city: recipient.city,
+                      zip: recipient.zip,
                     },
                     cartItems: cartItems
                   }),
