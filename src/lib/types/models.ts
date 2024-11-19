@@ -42,3 +42,9 @@ export type Recipient = {
   city: string,
   zip: string,
 }
+
+export type CostCalculations = {
+  shippingCost: number;
+  itemsCost: number;
+  totalCost: number;
+}
