@@ -57,8 +57,8 @@ import {
           itemsCost: responseData.value.itemsCost,
           totalCost: responseData.value.totalCost,
         });
-        setCostIsCalculatedLocal(true);  // Local state update
-        setCostIsCalculated(true);       // Propagate the state change to parent component
+        setCostIsCalculatedLocal(true);  
+        setCostIsCalculated(true);      
       }
     };
   

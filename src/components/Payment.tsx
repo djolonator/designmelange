@@ -39,30 +39,18 @@ return (
     }} 
     createOrder={async () => {
         try {
-            const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/initiatecheckout', {
+            const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/initiatePaypallOrder', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    recipient: {
-                      phone:recipient.phone,
-                      email: recipient.email,
-                      firstName: recipient.firstName,
-                      lastName: recipient.lastName,
-                      address: recipient.address,
-                      country: recipient.country,
-                      city: recipient.city,
-                      zip: recipient.zip,
-                    },
-                    cartItems: cartItems
-                  }),
             });
 
             const orderData = await response.json();
-
-            if (orderData.id) {
-                return orderData.id;
+            console.log('orderData', orderData);
+            if (orderData.isSuccess && orderData.value.data.id) {
+                console.log('orderData.value.data.id', orderData.value.data.id);
+                return orderData.value.data.id;
             } else {
                 const errorDetail = orderData?.details?.[0];
                 const errorMessage = errorDetail
