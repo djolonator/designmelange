@@ -47,9 +47,7 @@ return (
             });
 
             const orderData = await response.json();
-            console.log('orderData', orderData);
             if (orderData.isSuccess && orderData.value.data.id) {
-                console.log('orderData.value.data.id', orderData.value.data.id);
                 return orderData.value.data.id;
             } else {
                 const errorDetail = orderData?.details?.[0];
@@ -68,8 +66,7 @@ return (
     }} 
     onApprove={async (data, actions) => {
         try {
-            const response = await fetch(
-                `/api/orders/${data.orderID}/capture`,
+            const response = await fetch(process.env.REACT_APP_API_BASE_URL + `/capturePaypallOrder/${data.orderID}`,
                 {
                     method: "POST",
                     headers: {
@@ -93,13 +90,13 @@ return (
             } else if (errorDetail) {
                 // (2) Other non-recoverable errors -> Show a failure message
                 throw new Error(
-                    `${errorDetail.description} (${orderData.debug_id})`
+                    `${errorDetail.description} (${orderData.debugId})`
                 );
             } else {
                 // (3) Successful transaction -> Show confirmation or thank you message
                 // Or go to another URL:  actions.redirect('thank_you.html');
                 const transaction =
-                    orderData.purchase_units[0].payments
+                    orderData.data.purchaseUnits[0].payments
                         .captures[0];
                 setMessage(
                     `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
