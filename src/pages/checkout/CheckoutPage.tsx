@@ -1,23 +1,15 @@
 import React from "react";
-import { FormControl, FormLabel, Input, Select, Grid, Box, Button } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Select, Grid, Box } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateRecipient } from "../../lib/state/recipientSlice";
 import { countryRecipientSelect } from "../../lib/constants/constants";
-import { CostCalculations } from "../../lib/types/models";
 import CalculationCosts from '../../components/CalculationCosts';
-
 import Payment from "../../components/Payment";
 import {useState} from "react";
 
 const CheckoutPage: React.FC = () => {
   const recipient = useSelector((state: any) => state.recipient.recipient);
   const dispatch = useDispatch();
-  const [costCalculations, setCostCalculations] = useState<CostCalculations>(
-    {shippingCost:0,
-    itemsCost:0,
-    totalCost:0
-  });
-
   const [costIsCalculated, setCostIsCalculated] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -28,7 +20,6 @@ const CheckoutPage: React.FC = () => {
         [name]: value,
       })
     );
-    console.log('change', name + ' ' + value);
   };
 
   return (
@@ -36,6 +27,7 @@ const CheckoutPage: React.FC = () => {
       <Box>
         <Grid templateColumns="1fr 1fr">
           <FormControl>
+          <h1>Recipient</h1>
             <FormLabel>Email address</FormLabel>
             <Input
               name="email"

@@ -13,6 +13,9 @@ const Header: React.FC = () => {
       <Box  maxW={{ base: "100%", md: "100%", lg: "100%", xl: "70%" }}  mx="auto">
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <Box color="white"><ShoppingCartDrawer></ShoppingCartDrawer></Box>
+          <RouterLink to="/login" style={{ textDecoration: 'none' }}>
+                <Box px={2} py={1} rounded="md" _hover={{ textDecoration: 'none', bg: 'gray.700' }} color="white">Login</Box>
+              </RouterLink>
           <HStack spacing={8} alignItems="center">
             <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
               <RouterLink to="/posters" style={{ textDecoration: 'none' }}>

@@ -48,3 +48,16 @@ export type CostCalculations = {
   itemsCost: number;
   totalCost: number;
 }
+
+export type ErrorResponse = {
+  type: string;
+  title: string;
+  status: number;
+  errors: Record<string, string[]>;
+}
+
+export type LoginResponse = {
+  accessToken: string;
+  expiresIn: number;
+  refreshToken: string;
+}

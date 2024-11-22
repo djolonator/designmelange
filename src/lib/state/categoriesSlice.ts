@@ -1,15 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {Category} from '../types/models'
 
-
-
-
 interface CategoriesState {
   items: Category[];
   loading: boolean;
   error: string | null;
 }
-
 
 const initialState: CategoriesState = {
   items: [],
