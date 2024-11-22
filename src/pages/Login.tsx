@@ -8,21 +8,39 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from 'react-router-dom'; 
+import {login} from '../lib/utils/apiCalls';
+
 const Login: React.FC = () => {
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
   });
+  const [message, setMessage] = useState('');
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setUserCredentials({
       ...userCredentials,
       [name]: value,
-    });
+    });                                                                                 //handle login global state
   };
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const loginReposnse = await login(userCredentials.email, userCredentials.password);
+
+    if (loginReposnse.ok){
+      const loginReposnseJson = await loginReposnse.json();
+      setMessage('Successfully logged in');
+      localStorage.setItem("accessToken", loginReposnseJson.accessToken);
+      const expiresIn = Date.now() + loginReposnseJson.expiresIn * 1000;
+      localStorage.setItem("expiresAt", expiresIn.toString());
+      localStorage.setItem("refreshToken", loginReposnseJson.refreshToken);
+    }
+    else{
+      setMessage('Failed to login');  //read error object, just as in register
+    }
+
   };
 
   return (
@@ -53,6 +71,7 @@ const Login: React.FC = () => {
           <p style={{display:'inline'}}> Register</p>
         </RouterLink>
       </Box>
+      <p>{message}</p>
     </Container>
   );
 };

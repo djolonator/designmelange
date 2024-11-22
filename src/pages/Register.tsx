@@ -10,6 +10,7 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import ErrorMessagesForRegister from '../components/ErrorMessagesForRegister';
 import {ErrorResponse} from '../lib/types/models';
+import {register} from '../lib/utils/apiCalls'
 
 const Register: React.FC = () => {
   const [userCredentials, setUserCredentials] = useState({
@@ -34,20 +35,7 @@ const Register: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        process.env.REACT_APP_API_BASE_URL + "/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: userCredentials.email,
-            password: userCredentials.password,
-          }),
-        }
-      );
-      console.log('response', response);
+      const response = await register(userCredentials.email, userCredentials.password);
       if (response.ok) {
         setResponseMessage("Registered successfully");
         setResponseErrorMessage(null);

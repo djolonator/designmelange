@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {Category} from '../types/models'
+import {token} from '../utils/token';
 
 interface CategoriesState {
   items: Category[];
@@ -16,7 +17,12 @@ const initialState: CategoriesState = {
 export const fetchCategories = createAsyncThunk<Category[], void>(
   'categories/fetchCategories',
   async () => {
-    const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/categories');
+    const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/categories',{
+      method: 'POST',
+      headers: {
+         'Authorization': `Bearer ${token()}`
+      },
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
