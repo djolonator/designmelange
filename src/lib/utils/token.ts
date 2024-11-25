@@ -33,8 +33,6 @@ const setToken = (accessToken:string,expiresIn:number, refreshToken:string ) => 
     localStorage.setItem("refreshToken", refreshToken);
 }
 
-
-
 export const token = async () => {
 
     const expiresAt = localStorage.getItem("expiresAt");

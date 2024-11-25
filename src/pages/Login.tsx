@@ -39,6 +39,7 @@ const Login: React.FC = () => {
 
       localStorage.setItem("userEmail", userCredentials.email);
       localStorage.setItem("userPassword", userCredentials.password);
+      //navigate to home todo;
     }
     else{
       setMessage('Failed to login');  //read error object, just as in register

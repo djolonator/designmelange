@@ -5,12 +5,21 @@ import { updateRecipient } from "../../lib/state/recipientSlice";
 import { countryRecipientSelect } from "../../lib/constants/constants";
 import CalculationCosts from '../../components/CalculationCosts';
 import Payment from "../../components/Payment";
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import { isUserAuthenticated } from "../../lib/utils/auth";
+import { useNavigate } from "react-router-dom"; 
 
 const CheckoutPage: React.FC = () => {
   const recipient = useSelector((state: any) => state.recipient.recipient);
   const dispatch = useDispatch();
   const [costIsCalculated, setCostIsCalculated] = useState<boolean>(false);
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    if (!isUserAuthenticated()) {
+      navigate('/login');  // Redirect to login if user is not authenticated
+    }
+  }, [navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
