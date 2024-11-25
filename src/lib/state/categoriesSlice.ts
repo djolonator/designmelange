@@ -18,9 +18,9 @@ export const fetchCategories = createAsyncThunk<Category[], void>(
   'categories/fetchCategories',
   async () => {
     const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/categories',{
-      method: 'POST',
+      method: 'GET',
       headers: {
-         'Authorization': `Bearer ${token()}`
+         'Authorization': `Bearer ${await token()}`
       },
     });
     if (!response.ok) {

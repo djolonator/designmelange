@@ -36,3 +36,20 @@ export const register = async (email:string, password: string) => {
 
     return response;
 }
+
+export const refresh = async (refreshToken: string) => {
+  const response =  await fetch(
+      process.env.REACT_APP_API_BASE_URL + "/refresh",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refreshToken: refreshToken,
+        }),
+      }
+    );
+
+    return response;
+}

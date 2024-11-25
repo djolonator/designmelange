@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, SimpleGrid } from '@chakra-ui/react';
 import DesignCard from '../../components/DesignCard';
 import { CategoryItem } from '../../lib/types/models'; 
+import {token} from '../../lib/utils/token';
 
 interface PostersViewProps {
   selectedCategory: CategoryItem | undefined;
@@ -30,7 +31,11 @@ const PostersViewMain: React.FC<PostersViewProps> = ({selectedCategory}) =>{
         setError(null);
 
         try {
-          const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/designsByCategory/' + selectedCategory.designCategoryId + '?page=' + page); 
+          const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/designsByCategory/' + selectedCategory.designCategoryId + '?page=' + page,{
+            headers: {
+              'Authorization': `Bearer ${await token()}`
+           },
+          }); 
           const data = await response.json();
           setDesigns(prevDesigns => page === 0 ? data : [...prevDesigns, ...data]); 
         } catch (error) {

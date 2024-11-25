@@ -36,6 +36,9 @@ const Login: React.FC = () => {
       const expiresIn = Date.now() + loginReposnseJson.expiresIn * 1000;
       localStorage.setItem("expiresAt", expiresIn.toString());
       localStorage.setItem("refreshToken", loginReposnseJson.refreshToken);
+
+      localStorage.setItem("userEmail", userCredentials.email);
+      localStorage.setItem("userPassword", userCredentials.password);
     }
     else{
       setMessage('Failed to login');  //read error object, just as in register
