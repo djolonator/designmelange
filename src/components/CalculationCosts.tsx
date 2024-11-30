@@ -1,15 +1,8 @@
-import {
-    FormControl,
-    FormLabel,
-    Input,
-    Select,
-    Grid,
-    Box,
-    Button,
-  } from "@chakra-ui/react";
+import {Button,} from "@chakra-ui/react";
   import { useSelector } from "react-redux";
   import { useState } from "react";
   import { CostCalculations } from "../lib/types/models";
+  import { callculateCost } from "../lib/utils/apiCalls";
   
   interface CalculationCostsProps {
     setCostIsCalculated: (value: boolean) => void;
@@ -26,28 +19,7 @@ import {
     const [costIsCalculated, setCostIsCalculatedLocal] = useState<boolean>(false);
   
     const handleClick = async () => {
-      const response = await fetch(
-        process.env.REACT_APP_API_BASE_URL + "/calculateCost",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            recipient: {
-              phone: recipient.phone,
-              email: recipient.email,
-              firstName: recipient.firstName,
-              lastName: recipient.lastName,
-              address: recipient.address,
-              country: recipient.country,
-              city: recipient.city,
-              zip: recipient.zip,
-            },
-            cartItems: cartItems,
-          }),
-        }
-      );
+      const response = await callculateCost(recipient, cartItems);
   
       const responseData = await response.json();
   

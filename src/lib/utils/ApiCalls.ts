@@ -1,5 +1,6 @@
-
-
+import { Recipient } from '../types/models';
+import {token} from '../../lib/utils/token';
+import { CartItem } from '../types/models';
 
 export const login = async (email:string, password: string) => {
     const response =  await fetch(
@@ -50,6 +51,34 @@ export const refresh = async (refreshToken: string) => {
         }),
       }
     );
+
+    return response;
+}
+
+export const callculateCost = async (recipient: Recipient, cartItems:CartItem[] ) => {
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL + "/calculateCost",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${await token()}`
+      },
+      body: JSON.stringify({
+        recipient: {
+          phone: recipient.phone,
+          email: recipient.email,
+          firstName: recipient.firstName,
+          lastName: recipient.lastName,
+          address: recipient.address,
+          country: recipient.country,
+          city: recipient.city,
+          zip: recipient.zip,
+        },
+        cartItems: cartItems,
+      }),
+    }
+  )
 
     return response;
 }
