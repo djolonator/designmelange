@@ -10,9 +10,10 @@ import Register from './pages/Register';
 import Posters from './pages/posters/PostersPage'
 import PosterDetailPage from './pages/posterDetail/PosterDetailPage'
 import CheckoutPage from './pages/checkout/CheckoutPage';
-
+import { ToastContainer } from 'react-toastify';
 const App: React.FC = () => {
   return (
+    <>
     <Router>
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
@@ -25,6 +26,8 @@ const App: React.FC = () => {
         <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </Router>
+    <ToastContainer />
+    </>
   );
 };
 
