@@ -10,7 +10,7 @@ import Register from './pages/Register';
 import Posters from './pages/posters/PostersPage'
 import PosterDetailPage from './pages/posterDetail/PosterDetailPage'
 import CheckoutPage from './pages/checkout/CheckoutPage';
-import { ToastContainer } from 'react-toastify';
+import { Bounce, ToastContainer } from 'react-toastify';
 const App: React.FC = () => {
   return (
     <>
@@ -26,7 +26,18 @@ const App: React.FC = () => {
         <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </Router>
-    <ToastContainer />
+    <ToastContainer position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+transition={Bounce}
+/>
     </>
   );
 };

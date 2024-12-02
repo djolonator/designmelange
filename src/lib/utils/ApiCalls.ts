@@ -1,5 +1,5 @@
 import { Recipient } from '../types/models';
-import {token} from '../../lib/utils/token';
+import {token} from './token';
 import { CartItem } from '../types/models';
 
 export const login = async (email:string, password: string) => {
@@ -82,3 +82,5 @@ export const callculateCost = async (recipient: Recipient, cartItems:CartItem[] 
 
     return response;
 }
+
+

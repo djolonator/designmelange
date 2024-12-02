@@ -8,12 +8,15 @@ import Payment from "../../components/Payment";
 import {useState, useEffect} from "react";
 import { isUserAuthenticated } from "../../lib/utils/auth";
 import { useNavigate } from "react-router-dom"; 
+import { CostCalculations } from "../../lib/types/models";
+import { callculateCost } from "../../lib/utils/apiCalls";
 
 const CheckoutPage: React.FC = () => {
   const recipient = useSelector((state: any) => state.recipient.recipient);
   const dispatch = useDispatch();
   const [costIsCalculated, setCostIsCalculated] = useState<boolean>(false);
   const navigate = useNavigate(); 
+  const cartItems = useSelector((state: any) => state.cart.cartItems);
 
   useEffect(() => {
     if (!isUserAuthenticated()) {
@@ -30,6 +33,27 @@ const CheckoutPage: React.FC = () => {
       })
     );
   };
+
+  const handleClick = async () => {
+    const response = await callculateCost(recipient, cartItems);
+
+    const responseData = await response.json();
+
+    if (responseData.isSuccess) {
+      setCostCalculations({
+        shippingCost: responseData.value.shippingCost,
+        itemsCost: responseData.value.itemsCost,
+        totalCost: responseData.value.totalCost,
+      });
+      setCostIsCalculated(true);      
+    }
+  };
+
+  const [costCalculations, setCostCalculations] = useState<CostCalculations>({
+    shippingCost: 0,
+    itemsCost: 0,
+    totalCost: 0,
+  });
 
   return (
     <>
@@ -118,9 +142,13 @@ const CheckoutPage: React.FC = () => {
         </Grid>
       </Box>
       <Box>
-      <CalculationCosts setCostIsCalculated={setCostIsCalculated} />
-      {costIsCalculated && <Payment />}
-    </Box>
+        <CalculationCosts 
+          costIsCalculated={costIsCalculated} 
+          handleClick={handleClick}
+          costCalculations={costCalculations}
+        />
+        {costIsCalculated && <Payment />}
+      </Box>
     </>
   );
 };
