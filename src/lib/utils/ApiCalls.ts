@@ -83,4 +83,14 @@ export const callculateCost = async (recipient: Recipient, cartItems:CartItem[] 
     return response;
 }
 
-
+export const getDesign = async (designId: string ) => {
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL + "/design/" + designId,
+    {
+      headers: {
+        'Authorization': `Bearer ${await token()}`
+      },
+    }
+  )
+    return response;
+}

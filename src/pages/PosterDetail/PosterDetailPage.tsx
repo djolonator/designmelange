@@ -5,6 +5,7 @@ import { DesignItem } from "../../lib/types/models";
 import { productVariantsSelect } from "../../lib/constants/constants";
 import { addItemToCart } from "../../lib/state/cartSlice";
 import { useDispatch } from "react-redux";
+import { getDesign } from "../../lib/utils/apiCalls";
 
 const PosterDetailPage: React.FC = () => {
   const { designId } = useParams<{ designId: string }>();
@@ -35,9 +36,7 @@ const PosterDetailPage: React.FC = () => {
   useEffect(() => {
     const fetchDesign = async () => {
       try {
-        const response = await fetch(
-          process.env.REACT_APP_API_BASE_URL + "/design/" + designId
-        );
+        const response = await getDesign(designId!);
         const data = await response.json();
         setDesign(data);
       } catch (error) {
@@ -45,7 +44,7 @@ const PosterDetailPage: React.FC = () => {
       }
     };
     fetchDesign();
-  }, [designId]);
+  }, [getDesign,designId]);
 
   return (
     <Grid templateColumns="1fr 1fr" gap={4}>
