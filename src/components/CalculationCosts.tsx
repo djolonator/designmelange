@@ -1,6 +1,4 @@
 import {Button,} from "@chakra-ui/react";
-  import { useSelector } from "react-redux";
-  import { useState } from "react";
   import { CostCalculations } from "../lib/types/models";
   
   interface CalculationCostsProps {
@@ -10,8 +8,6 @@ import {Button,} from "@chakra-ui/react";
   }
   
   const CalculationCosts: React.FC<CalculationCostsProps> = ({ costIsCalculated, handleClick, costCalculations }) => {
-    const recipient = useSelector((state: any) => state.recipient.recipient);
-    const cartItems = useSelector((state: any) => state.cart.cartItems);
   
     return (
       <>

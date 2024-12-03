@@ -11,6 +11,7 @@ import Posters from './pages/posters/PostersPage'
 import PosterDetailPage from './pages/posterDetail/PosterDetailPage'
 import CheckoutPage from './pages/checkout/CheckoutPage';
 import { Bounce, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 const App: React.FC = () => {
   return (
     <>
@@ -27,7 +28,7 @@ const App: React.FC = () => {
       </Routes>
     </Router>
     <ToastContainer position="top-right"
-autoClose={5000}
+autoClose={2000}
 hideProgressBar={false}
 newestOnTop={false}
 closeOnClick
