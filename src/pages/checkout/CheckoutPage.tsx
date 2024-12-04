@@ -1,16 +1,17 @@
 import React from "react";
-import { FormControl, FormLabel, Input, Select, Grid, Box } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Select, Grid, Box, FormHelperText, FormErrorMessage } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateRecipient } from "../../lib/state/recipientSlice";
 import { countryRecipientSelect } from "../../lib/constants/constants";
 import CalculationCosts from '../../components/CalculationCosts';
 import Payment from "../../components/Payment";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { isUserAuthenticated } from "../../lib/utils/auth";
-import { useNavigate } from "react-router-dom"; 
-import { CostCalculations } from "../../lib/types/models";
+import { validateRecipientForm } from "../../lib/utils/recipientFormValidation"; 
+import { useNavigate } from "react-router-dom";
+import { CostCalculations, RecipientValidation } from "../../lib/types/models";
 import { callculateCost } from "../../lib/utils/apiCalls";
-import { toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { RootState } from '../../lib/state/store';
 
 
@@ -18,12 +19,23 @@ const CheckoutPage: React.FC = () => {
   const recipient = useSelector((state: RootState) => state.recipient.recipient);
   const dispatch = useDispatch();
   const [costIsCalculated, setCostIsCalculated] = useState<boolean>(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
+
+  const [recipientValidation, setRecipientValidation] = useState<RecipientValidation>({
+    phoneIsValid: true,
+    emailIsValid: true,
+    countryIsValid: true,
+    firstNameIsValid: true,
+    lastNameIsValid: true,
+    addressIsValid: true,
+    cityIsValid: true,
+    zipIsValid: true,
+  });
 
   useEffect(() => {
     if (!isUserAuthenticated()) {
-      navigate('/login');  // Redirect to login if user is not authenticated
+      navigate('/login'); 
     }
   }, [navigate]);
 
@@ -35,26 +47,26 @@ const CheckoutPage: React.FC = () => {
         [name]: value,
       })
     );
+    setRecipientValidation(validateRecipientForm(recipient));
   };
 
   const handleClick = async () => {
 
-    if (cartItems.length === 0){
+    if (cartItems.length === 0) {
       toast("You must add items to cart.");
-    }else if (!recipient.address || !recipient.city || !recipient.country || !recipient.email || !recipient.firstName || !recipient.lastName || !recipient.phone || !recipient.zip){
-      toast("You must fill all fields");
-    }else{
+    } else if (!recipient.address || !recipient.city || !recipient.country || !recipient.email || !recipient.firstName || !recipient.lastName || !recipient.phone || !recipient.zip) {
+      setRecipientValidation(validateRecipientForm(recipient));
+    } else {
       const response = await callculateCost(recipient, cartItems);
-
       const responseData = await response.json();
-  
+
       if (responseData.isSuccess) {
         setCostCalculations({
           shippingCost: responseData.value.shippingCost,
           itemsCost: responseData.value.itemsCost,
           totalCost: responseData.value.totalCost,
         });
-        setCostIsCalculated(true);      
+        setCostIsCalculated(true);
       }
     }
   };
@@ -69,39 +81,62 @@ const CheckoutPage: React.FC = () => {
     <>
       <Box>
         <Grid templateColumns="1fr 1fr">
-          <FormControl>
-          <h1>Recipient</h1>
-            <FormLabel>Email address</FormLabel>
-            <Input
-              name="email"
-              placeholder="Email"
-              type="email"
-              value={recipient.email}
-              onChange={handleChange}
-            />
-            <FormLabel>Phone number</FormLabel>
-            <Input
-              name="phone"
-              placeholder="Phone number"
-              type="phone"
-              value={recipient.phone}
-              onChange={handleChange}
-            />
-            <FormLabel>Country</FormLabel>
-            <Select
-              name="country"
-              placeholder="Select country"
-              value={recipient.country}
-              onChange={handleChange}
-            >
-              {countryRecipientSelect.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Select>
+          <Box>
+            <h1>Recipient</h1>
+            <FormControl isRequired isInvalid={!recipientValidation.emailIsValid}>
+              <FormLabel>Email address</FormLabel>
+              <Input
+                name="email"
+                placeholder="Email"
+                type="email"
+                value={recipient.email}
+                onChange={handleChange}
+              />
+              {recipientValidation.emailIsValid ? (
+                <></>
+              ) : (
+                <FormErrorMessage>Email is required.</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl isRequired isInvalid={!recipientValidation.phoneIsValid}>
+              <FormLabel>Phone number</FormLabel>
+              <Input
+                name="phone"
+                placeholder="Phone number"
+                type="phone"
+                value={recipient.phone}
+                onChange={handleChange}
+              />
+              {recipientValidation.phoneIsValid ? (
+                <FormHelperText>
+                  Phone is for delivery purpuses only
+                </FormHelperText>
+              ) : (
+                <FormErrorMessage>Phone is required.</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl isRequired isInvalid={!recipientValidation.countryIsValid}>
+              <FormLabel>Country</FormLabel>
+              <Select
+                name="country"
+                placeholder="Select country"
+                value={recipient.country}
+                onChange={handleChange}
+              >
+                {countryRecipientSelect.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </Select>
+              {recipientValidation.countryIsValid ? (
+                <></>
+              ) : (
+                <FormErrorMessage>Country is required.</FormErrorMessage>
+              )}
+            </FormControl>
             <Grid templateColumns="1fr 1fr">
-              <Box>
+              <FormControl isRequired isInvalid={!recipientValidation.firstNameIsValid}>
                 <FormLabel>First name</FormLabel>
                 <Input
                   name="firstName"
@@ -109,8 +144,13 @@ const CheckoutPage: React.FC = () => {
                   value={recipient.firstName}
                   onChange={handleChange}
                 />
-              </Box>
-              <Box>
+                {!recipientValidation.firstNameIsValid ? (
+                  <></>
+                ) : (
+                  <FormErrorMessage>First name is required.</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isRequired isInvalid={!recipientValidation.lastNameIsValid}>
                 <FormLabel>Last name</FormLabel>
                 <Input
                   name="lastName"
@@ -118,17 +158,29 @@ const CheckoutPage: React.FC = () => {
                   value={recipient.lastName}
                   onChange={handleChange}
                 />
-              </Box>
+                {recipientValidation.lastNameIsValid ? (
+                  <></>
+                ) : (
+                  <FormErrorMessage>Last name is required.</FormErrorMessage>
+                )}
+              </FormControl>
             </Grid>
-            <FormLabel>Address</FormLabel>
-            <Input
-              name="address"
-              placeholder="Address"
-              value={recipient.address}
-              onChange={handleChange}
-            />
+            <FormControl isRequired isInvalid={!recipientValidation.addressIsValid}>
+              <FormLabel>Address</FormLabel>
+              <Input
+                name="address"
+                placeholder="Address"
+                value={recipient.address}
+                onChange={handleChange}
+              />
+              {recipientValidation.addressIsValid ? (
+              <></>
+              ) : (
+                <FormErrorMessage>Address is required.</FormErrorMessage>
+              )}
+            </FormControl>
             <Grid templateColumns="1fr 1fr">
-              <Box>
+              <FormControl isRequired isInvalid={!recipientValidation.cityIsValid}>
                 <FormLabel>City</FormLabel>
                 <Input
                   name="city"
@@ -136,8 +188,13 @@ const CheckoutPage: React.FC = () => {
                   value={recipient.city}
                   onChange={handleChange}
                 />
-              </Box>
-              <Box>
+                {recipientValidation.cityIsValid ? (
+                  <></>
+                ) : (
+                  <FormErrorMessage>City is required.</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isRequired isInvalid={!recipientValidation.zipIsValid}>
                 <FormLabel>ZIP/Postal code</FormLabel>
                 <Input
                   name="zip"
@@ -145,15 +202,20 @@ const CheckoutPage: React.FC = () => {
                   value={recipient.zip}
                   onChange={handleChange}
                 />
-              </Box>
+                {recipientValidation.zipIsValid ? (
+                 <></>
+                ) : (
+                  <FormErrorMessage>Zip code is required.</FormErrorMessage>
+                )}
+              </FormControl>
             </Grid>
-          </FormControl>
+          </Box>
           <Box>cart items-editor</Box>
         </Grid>
       </Box>
       <Box>
-        <CalculationCosts 
-          costIsCalculated={costIsCalculated} 
+        <CalculationCosts
+          costIsCalculated={costIsCalculated}
           handleClick={handleClick}
           costCalculations={costCalculations}
         />
@@ -164,3 +226,7 @@ const CheckoutPage: React.FC = () => {
 };
 
 export default CheckoutPage;
+
+
+
+

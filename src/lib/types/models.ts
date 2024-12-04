@@ -61,3 +61,14 @@ export type LoginResponse = {
   expiresIn: number;
   refreshToken: string;
 }
+
+export type RecipientValidation = {
+  phoneIsValid: boolean,
+  emailIsValid: boolean,
+  countryIsValid: boolean,
+  firstNameIsValid: boolean,
+  lastNameIsValid: boolean,
+  addressIsValid: boolean,
+  cityIsValid: boolean,
+  zipIsValid: boolean,
+}
