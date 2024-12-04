@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
+import {initiatePaypallOrder,capturePaypallOrder} from '../lib/utils/apiCalls'
 
 const Payment: React.FC = () => {
 // Renders errors or successfull transactions on the screen.
@@ -39,12 +40,7 @@ return (
     }} 
     createOrder={async () => {
         try {
-            const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/initiatePaypallOrder', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            const response = await initiatePaypallOrder();
 
             const orderData = await response.json();
             if (orderData.isSuccess && orderData.value.data.id) {
@@ -66,14 +62,7 @@ return (
     }} 
     onApprove={async (data, actions) => {
         try {
-            const response = await fetch(process.env.REACT_APP_API_BASE_URL + `/capturePaypallOrder/${data.orderID}`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            const response = await capturePaypallOrder(data.orderID);
 
             const orderData = await response.json();
             // Three cases to handle:

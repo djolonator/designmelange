@@ -94,3 +94,25 @@ export const getDesign = async (designId: string ) => {
   )
     return response;
 }
+
+export const initiatePaypallOrder = async () => {
+  const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/initiatePaypallOrder', {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+         'Authorization': `Bearer ${await token()}`
+    },
+})
+    return response;
+}
+
+export const capturePaypallOrder = async (orderID:string) => {
+  const response = await fetch(process.env.REACT_APP_API_BASE_URL + `/capturePaypallOrder/${orderID}`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+         'Authorization': `Bearer ${await token()}`
+    },
+})
+    return response;
+}
