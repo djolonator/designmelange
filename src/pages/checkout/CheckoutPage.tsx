@@ -47,7 +47,7 @@ const CheckoutPage: React.FC = () => {
         [name]: value,
       })
     );
-    setRecipientValidation(validateRecipientForm(recipient));
+    // maybe update recipientValidation here, but have problem
   };
 
   const handleClick = async () => {
