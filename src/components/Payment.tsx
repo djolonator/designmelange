@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
 import {initiatePaypallOrder,capturePaypallOrder} from '../lib/utils/apiCalls'
+import { RootState } from '../lib/state/store';
 
 const Payment: React.FC = () => {
 // Renders errors or successfull transactions on the screen.
@@ -20,9 +21,7 @@ const Payment: React.FC = () => {
     };
 
     const [message, setMessage] = useState("");
-    const recipient = useSelector((state: any) => state.recipient.recipient);
-    const cartItems = useSelector((state: any) => state.cart.cartItems);
-
+    const recipient = useSelector((state: RootState) => state.recipient.recipient);
 
     if (!recipient.email || !recipient.phone || !recipient.country || !recipient.firstName || !recipient.lastName || !recipient.address || !recipient.city || !recipient.zip) {
         return <div>Please fill all fields</div>; // ovo cu videti kako da resim, bez ovog ifa po unosu podataka u formi na chekout pageu recipient je sve prazna string, tek kada se uradi back pa return, "upuni se"
@@ -40,7 +39,7 @@ return (
     }} 
     createOrder={async () => {
         try {
-            const response = await initiatePaypallOrder();
+            const response = await initiatePaypallOrder(recipient);
 
             const orderData = await response.json();
             if (orderData.isSuccess && orderData.value.data.id) {
