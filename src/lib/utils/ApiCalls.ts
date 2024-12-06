@@ -95,23 +95,13 @@ export const getDesign = async (designId: string) => {
   return response;
 }
 
-export const initiatePaypallOrder = async (recipient: Recipient) => {
+export const initiatePaypallOrder = async () => {
   const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/initiatePaypallOrder', {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       'Authorization': `Bearer ${await token()}`
-    },
-    body: JSON.stringify({
-      phone: recipient.phone,
-      email: recipient.email,
-      firstName: recipient.firstName,
-      lastName: recipient.lastName,
-      address: recipient.address,
-      country: recipient.country,
-      city: recipient.city,
-      zip: recipient.zip,
-    }),
+    }
   })
   return response;
 }

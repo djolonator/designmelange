@@ -48,6 +48,7 @@ const CheckoutPage: React.FC = () => {
       })
     );
     // maybe update recipientValidation here, but have problem
+    setCostIsCalculated(false);
   };
 
   const handleClick = async () => {
