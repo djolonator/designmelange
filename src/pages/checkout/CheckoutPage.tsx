@@ -11,7 +11,7 @@ import { validateRecipientForm } from "../../lib/utils/recipientFormValidation";
 import { useNavigate } from "react-router-dom";
 import { CostCalculations, RecipientValidation } from "../../lib/types/models";
 import { callculateCost } from "../../lib/utils/apiCalls";
-import { toast } from 'react-toastify';
+import { showToast } from "../../lib/utils/toaster";
 import { RootState } from '../../lib/state/store';
 
 
@@ -54,20 +54,25 @@ const CheckoutPage: React.FC = () => {
   const handleClick = async () => {
 
     if (cartItems.length === 0) {
-      toast("You must add items to cart.");
+      showToast("You must add items to cart.", false);
     } else if (!recipient.address || !recipient.city || !recipient.country || !recipient.email || !recipient.firstName || !recipient.lastName || !recipient.phone || !recipient.zip) {
       setRecipientValidation(validateRecipientForm(recipient));
     } else {
       const response = await callculateCost(recipient, cartItems);
       const responseData = await response.json();
-
-      if (responseData.isSuccess) {
+      if (response.ok){
         setCostCalculations({
-          shippingCost: responseData.value.shippingCost,
-          itemsCost: responseData.value.itemsCost,
-          totalCost: responseData.value.totalCost,
+          shippingCost: responseData.shippingCost,
+          itemsCost: responseData.itemsCost,
+          totalCost: responseData.totalCost,
         });
         setCostIsCalculated(true);
+      }else if (response.status === 422){
+        //connect with recipient form
+      }else if(response.status === 400){
+        showToast(responseData.message, false);
+      }else{
+        showToast("Something went wrong", false);
       }
     }
   };

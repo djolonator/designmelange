@@ -2,6 +2,7 @@ import { Recipient } from '../types/models';
 import { token } from './token';
 import { CartItem } from '../types/models';
 
+
 export const login = async (email: string, password: string) => {
   const response = await fetch(
     process.env.REACT_APP_API_BASE_URL + "/login",
@@ -34,7 +35,7 @@ export const register = async (email: string, password: string) => {
       }),
     }
   );
-
+  
   return response;
 }
 
@@ -115,4 +116,8 @@ export const capturePaypallOrder = async (orderID: string) => {
     },
   })
   return response;
+}
+
+const checkResponse = (response: Response) => {
+  
 }

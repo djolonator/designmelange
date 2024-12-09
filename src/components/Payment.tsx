@@ -38,8 +38,9 @@ return (
             const response = await initiatePaypallOrder();
 
             const orderData = await response.json();
-            if (orderData.isSuccess && orderData.value.data.id) {
-                return orderData.value.data.id;
+            
+            if (orderData.data.id) {
+                return orderData.data.id;
             } else {
                 const errorDetail = orderData?.details?.[0];
                 const errorMessage = errorDetail
@@ -60,6 +61,7 @@ return (
             const response = await capturePaypallOrder(data.orderID);
 
             const orderData = await response.json();
+            console.log('capturePaypallOrderResponse', orderData);
             // Three cases to handle:
             //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
             //   (2) Other non-recoverable errors -> Show a failure message
