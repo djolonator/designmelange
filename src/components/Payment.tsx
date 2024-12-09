@@ -85,19 +85,6 @@ return (
                 );
             } else {
                 showToast('You bought poster.', true);
-                // (3) Successful transaction -> Show confirmation or thank you message
-                // Or go to another URL:  actions.redirect('thank_you.html');
-                const transaction =
-                    orderData.data.purchaseUnits[0].payments
-                        .captures[0];
-                setMessage(
-                    `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
-                );
-                console.log(
-                    "Capture result",
-                    orderData,
-                    JSON.stringify(orderData, null, 2)
-                );
                 navigate('/');
                 
             }
