@@ -1,25 +1,21 @@
-import { Recipient } from '../types/models';
-import { token } from './token';
-import { CartItem } from '../types/models';
-
+import { Recipient } from "../types/models";
+import { token } from "./token";
+import { CartItem } from "../types/models";
 
 export const login = async (email: string, password: string) => {
-  const response = await fetch(
-    process.env.REACT_APP_API_BASE_URL + "/login",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    }
-  );
+  const response = await fetch(process.env.REACT_APP_API_BASE_URL + "/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  });
 
   return response;
-}
+};
 
 export const register = async (email: string, password: string) => {
   const response = await fetch(
@@ -35,9 +31,9 @@ export const register = async (email: string, password: string) => {
       }),
     }
   );
-  
+
   return response;
-}
+};
 
 export const refresh = async (refreshToken: string) => {
   const response = await fetch(
@@ -54,16 +50,19 @@ export const refresh = async (refreshToken: string) => {
   );
 
   return response;
-}
+};
 
-export const callculateCost = async (recipient: Recipient, cartItems: CartItem[]) => {
+export const callculateCost = async (
+  recipient: Recipient,
+  cartItems: CartItem[]
+) => {
   const response = await fetch(
     process.env.REACT_APP_API_BASE_URL + "/estimateTotalCost",
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${await token()}`
+        Authorization: `Bearer ${await token()}`,
       },
       body: JSON.stringify({
         recipient: {
@@ -79,45 +78,66 @@ export const callculateCost = async (recipient: Recipient, cartItems: CartItem[]
         cartItems: cartItems,
       }),
     }
-  )
+  );
 
   return response;
-}
+};
 
 export const getDesign = async (designId: string) => {
   const response = await fetch(
     process.env.REACT_APP_API_BASE_URL + "/design/" + designId,
     {
       headers: {
-        'Authorization': `Bearer ${await token()}`
+        Authorization: `Bearer ${await token()}`,
       },
     }
-  )
+  );
   return response;
-}
+};
 
 export const initiatePaypallOrder = async () => {
-  const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/initiatePaypallOrder', {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      'Authorization': `Bearer ${await token()}`
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL + "/initiatePaypallOrder",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${await token()}`,
+      },
     }
-  })
+  );
   return response;
-}
+};
 
 export const capturePaypallOrder = async (orderID: string) => {
-  const response = await fetch(process.env.REACT_APP_API_BASE_URL + `/capturePaypallOrder/${orderID}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      'Authorization': `Bearer ${await token()}`
-    },
-  })
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL + `/capturePaypallOrder/${orderID}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${await token()}`,
+      },
+    }
+  );
   return response;
-}
+};
 
-const checkResponse = (response: Response) => {
-  
-}
+export const designsByCategory = async (
+  designCategoryId: number,
+  page: number
+) => {
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL +
+      "/designsByCategory/" +
+      designCategoryId +
+      "?page=" +
+      page,
+    {
+      headers: {
+        Authorization: `Bearer ${await token()}`,
+      },
+    }
+  );
+  return response;
+};
