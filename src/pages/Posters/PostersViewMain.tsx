@@ -3,6 +3,7 @@ import { Box, Button, SimpleGrid } from '@chakra-ui/react';
 import DesignCard from '../../components/DesignCard';
 import { CategoryItem } from '../../lib/types/models'; 
 import {designsByCategory} from '../../lib/utils/apiCalls'
+import { DesignItem } from '../../lib/types/models'; 
 
 interface PostersViewProps {
   selectedCategory: CategoryItem | undefined;
@@ -10,7 +11,7 @@ interface PostersViewProps {
 
 const PostersViewMain: React.FC<PostersViewProps> = ({selectedCategory}) =>{
 
-  const [designs, setDesigns] = useState<any[]>([]);
+  const [designs, setDesigns] = useState<DesignItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(0);
@@ -56,7 +57,7 @@ const PostersViewMain: React.FC<PostersViewProps> = ({selectedCategory}) =>{
     <Box>
       <SimpleGrid columns={[2, null, 3]} spacing='20px'>
         {designs.length > 0 ? (
-          designs.map(design => <DesignCard key={design.id} design={design} />)
+          designs.map(design => <DesignCard key={design.designId} design={design} />)
         ) : (
           <div>No designs available</div>
         )}
