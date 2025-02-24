@@ -1,16 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import PostersViewMain from './PostersViewMain';
 import CategoryViewNav from './CategoryViewNav';
 import { CategoryItem } from '../../lib/types/models'; 
+import { DesignItem } from '../../lib/types/models'; 
+import {designsByCategory} from '../../lib/utils/apiCalls'
 
 const PostersPage: React.FC = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryItem>();
 
+  const [designs, setDesigns] = useState<DesignItem[]>([]);
+
+  const [whatToDisplay, setWhatToDisplay] = useState('bestSellers');
+
+  const [page, setPage] = useState(0);
+
   const handleCategoryClick = (selectedCategory: CategoryItem) => {
-    setSelectedCategory(selectedCategory);  
+    setDesigns([]); //click on same category broken
+    setPage(0); 
+    setSelectedCategory(selectedCategory);
   };
+
+  const handleLoadMoreDesignsClick =() => {
+    setPage(page+1);
+    console.log(page);
+  }
+
+  useEffect(() => {
+      if (selectedCategory && selectedCategory.designCategoryId !== 0) {
+        const fetchDesigns = async () => {
+          try {
+            const response = await designsByCategory(selectedCategory.designCategoryId, page);
+            const data = await response.json();
+            setDesigns(prevDesigns => page === 0 ? data : [...prevDesigns, ...data]); 
+          } catch (error) {
+            
+          } finally {
+            
+          }
+        };
+        if (selectedCategory.designCount - designs.length > 0){
+          fetchDesigns();
+        }
+      }
+      else{
+        
+      }
+    }, [page, selectedCategory]);
 
   return (
     <Box w="100%">
@@ -43,7 +80,7 @@ const PostersPage: React.FC = () => {
         <CategoryViewNav onCategoryClick={handleCategoryClick} />
         </GridItem>
         <GridItem pl='2' bg='green.300' area={'main'}>
-          <PostersViewMain selectedCategory={selectedCategory}></PostersViewMain>
+          <PostersViewMain designs={designs} whatToDisplay={whatToDisplay} handleLoadMoreDesignsClick={handleLoadMoreDesignsClick}></PostersViewMain>
         </GridItem>
         <GridItem pl='2' bg='blue.300' area={'footer'}>
           Footer

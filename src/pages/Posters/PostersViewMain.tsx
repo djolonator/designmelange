@@ -1,55 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, SimpleGrid } from '@chakra-ui/react';
 import DesignCard from '../../components/DesignCard';
-import { CategoryItem } from '../../lib/types/models'; 
-import {designsByCategory} from '../../lib/utils/apiCalls'
 import { DesignItem } from '../../lib/types/models'; 
 
 interface PostersViewProps {
-  selectedCategory: CategoryItem | undefined;
+  designs: DesignItem[];
+  whatToDisplay: string;
+  handleLoadMoreDesignsClick: () => void                           //'categories' | 'search' | 'bestSellers'    //make constant
 }
 
-const PostersViewMain: React.FC<PostersViewProps> = ({selectedCategory}) =>{
+const PostersViewMain: React.FC<PostersViewProps> = ({designs, whatToDisplay, handleLoadMoreDesignsClick}) =>{
 
-  const [designs, setDesigns] = useState<DesignItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(0);
  
-  const handleLoadMoreDesignsClick =() => {
-    setPage(page+1);
-  }
-
-  useEffect(() => {
-    setDesigns([]);
-    setPage(0); 
-  }, [selectedCategory]);
-
-  useEffect(() => {
-    if (selectedCategory && selectedCategory.designCategoryId !== 0) {
-      const fetchDesigns = async () => {
-        setLoading(true);
-        setError(null);
-
-        try {
-          const response = await designsByCategory(selectedCategory.designCategoryId, page);
-          const data = await response.json();
-          setDesigns(prevDesigns => page === 0 ? data : [...prevDesigns, ...data]); 
-        } catch (error) {
-          setError('Failed to fetch designs');
-        } finally {
-          setLoading(false);
-        }
-      };
-      if (selectedCategory.designCount - designs.length > 0){
-        fetchDesigns();
-      }
-    }
-    else{
-      
-    }
-  }, [selectedCategory, page]);
-
+ 
   if (loading) return <div>Loading designs...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -62,11 +27,11 @@ const PostersViewMain: React.FC<PostersViewProps> = ({selectedCategory}) =>{
           <div>No designs available</div>
         )}
       </SimpleGrid>
-      {selectedCategory && (
+      
         <Button onClick={handleLoadMoreDesignsClick}>
-          Load more designs: {selectedCategory.designCount - designs.length}
+          Load more designs:
         </Button>
-      )}
+      
     </Box>
   );
 };
