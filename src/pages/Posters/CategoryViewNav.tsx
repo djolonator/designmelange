@@ -6,7 +6,7 @@ import CategoryListItem from '../../components/CategoryListItem';
 import { CategoryItem } from '../../lib/types/models'; 
 
 interface CategoryViewNavProps {
-    onCategoryClick: (selectedCategory: CategoryItem) => void;
+    onCategoryClick: (category: CategoryItem) => void;
   }
 
 const CategoryViewNav: React.FC<CategoryViewNavProps> = ({ onCategoryClick }) => {

@@ -16,10 +16,12 @@ const PostersPage: React.FC = () => {
 
   const [page, setPage] = useState(0);
 
-  const handleCategoryClick = (selectedCategory: CategoryItem) => {
-    setDesigns([]); //click on same category broken
-    setPage(0); 
-    setSelectedCategory(selectedCategory);
+  const handleCategoryClick = (category: CategoryItem) => {
+    if (category.designCategoryId !== selectedCategory?.designCategoryId){
+      setDesigns([]);
+      setPage(0); 
+      setSelectedCategory(category);
+    }
   };
 
   const handleLoadMoreDesignsClick =() => {
