@@ -141,3 +141,20 @@ export const designsByCategory = async (
   );
   return response;
 };
+
+export const bestsellersDesigns = async (
+  page: number
+) => {
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL +
+      "/bestsellingDesigns/" +
+      "?page=" +
+      page,
+    {
+      headers: {
+        Authorization: `Bearer ${await token()}`,
+      },
+    }
+  );
+  return response;
+};

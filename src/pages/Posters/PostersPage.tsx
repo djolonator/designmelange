@@ -4,7 +4,7 @@ import PostersViewMain from './PostersViewMain';
 import CategoryViewNav from './CategoryViewNav';
 import { CategoryItem } from '../../lib/types/models'; 
 import { DesignItem } from '../../lib/types/models'; 
-import {designsByCategory} from '../../lib/utils/apiCalls'
+import {designsByCategory, bestsellersDesigns} from '../../lib/utils/apiCalls'
 
 const PostersPage: React.FC = () => {
 
@@ -31,11 +31,11 @@ const PostersPage: React.FC = () => {
 
   useEffect(() => {
       if (selectedCategory && selectedCategory.designCategoryId !== 0) {
-        const fetchDesigns = async () => {
+        const fetchDesignsByCategory = async () => {
           try {
-            const response = await designsByCategory(selectedCategory.designCategoryId, page);
-            const data = await response.json();
-            setDesigns(prevDesigns => page === 0 ? data : [...prevDesigns, ...data]); 
+            const designsByCategoryResponse = await designsByCategory(selectedCategory.designCategoryId, page);
+            const designsByCategoryData = await designsByCategoryResponse.json();
+            setDesigns(prevDesigns => page === 0 ? designsByCategoryData : [...prevDesigns, ...designsByCategoryData]); 
           } catch (error) {
             
           } finally {
@@ -43,11 +43,22 @@ const PostersPage: React.FC = () => {
           }
         };
         if (selectedCategory.designCount - designs.length > 0){
-          fetchDesigns();
+          fetchDesignsByCategory();
         }
       }
       else{
-        
+        const fetchbestsellersDesigns = async () => {
+          try {
+            const bestsellersDesignsResponse = await bestsellersDesigns(page);
+            const bestsellersDesignsData = await bestsellersDesignsResponse.json();
+            setDesigns(prevDesigns => page === 0 ? bestsellersDesignsData : [...prevDesigns, ...bestsellersDesignsData]); 
+          } catch (error) {
+            
+          } finally {
+            
+          }
+        }; 
+        fetchbestsellersDesigns();
       }
     }, [page, selectedCategory]);
 
