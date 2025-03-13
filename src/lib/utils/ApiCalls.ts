@@ -158,3 +158,23 @@ export const bestsellersDesigns = async (
   );
   return response;
 };
+
+export const designsSearch = async (
+  page: number,
+  term: string
+) => {
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL +
+      "/designsSearch/" +
+      "?page=" +
+      page +
+      "&term=" +
+      term,
+    {
+      headers: {
+        Authorization: `Bearer ${await token()}`,
+      },
+    }
+  );
+  return response;
+};

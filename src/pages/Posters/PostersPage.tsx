@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Input } from '@chakra-ui/react';
 import PostersViewMain from './PostersViewMain';
 import CategoryViewNav from './CategoryViewNav';
 import { CategoryItem } from '../../lib/types/models'; 
 import { DesignItem } from '../../lib/types/models'; 
-import {designsByCategory, bestsellersDesigns} from '../../lib/utils/apiCalls'
+import {designsByCategory, bestsellersDesigns, designsSearch} from '../../lib/utils/apiCalls'
 
 const PostersPage: React.FC = () => {
 
@@ -12,21 +12,33 @@ const PostersPage: React.FC = () => {
 
   const [designs, setDesigns] = useState<DesignItem[]>([]);
 
+
+  const [query, setQuery] = useState(''); // Store search query
+
   const [whatToDisplay, setWhatToDisplay] = useState('bestSellers');
 
   const [page, setPage] = useState(0);
 
   const handleCategoryClick = (category: CategoryItem) => {
     if (category.designCategoryId !== selectedCategory?.designCategoryId){
+      setQuery('');
       setDesigns([]);
       setPage(0); 
       setSelectedCategory(category);
     }
   };
 
+  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setQuery(e.target.value);
+    setPage(0); 
+    setSelectedCategory({designCategoryId:0,
+      designCategoryName:'',
+      designCount:0
+    });
+  };
+
   const handleLoadMoreDesignsClick =() => {
     setPage(page+1);
-    console.log(page);
   }
 
   useEffect(() => {
@@ -43,11 +55,28 @@ const PostersPage: React.FC = () => {
           }
         };
         if (selectedCategory.designCount - designs.length > 0){
+          //setQuery('');
           fetchDesignsByCategory();
         }
       }
+      else if (query !== ''){
+        const fetchData = async () => {
+          try {
+            const searchDesignsByTermResponse = await designsSearch(page, query);
+            const searchDesignsByTermDesignsData = await searchDesignsByTermResponse.json();
+            setDesigns(prevDesigns => page === 0 ? searchDesignsByTermDesignsData : [...prevDesigns, ...searchDesignsByTermDesignsData]); 
+          } catch (error) {
+           
+          } finally {
+         ;
+          }
+        };
+        const debounceTimeout = setTimeout(fetchData, 500);
+        clearTimeout(debounceTimeout);
+        
+      }
       else{
-        const fetchbestsellersDesigns = async () => {
+        const fetchBestsellersDesigns = async () => {
           try {
             const bestsellersDesignsResponse = await bestsellersDesigns(page);
             const bestsellersDesignsData = await bestsellersDesignsResponse.json();
@@ -58,9 +87,9 @@ const PostersPage: React.FC = () => {
             
           }
         }; 
-        fetchbestsellersDesigns();
+        fetchBestsellersDesigns();
       }
-    }, [page, selectedCategory]);
+    }, [page, selectedCategory, query]);
 
   return (
     <Box w="100%">
@@ -87,7 +116,9 @@ const PostersPage: React.FC = () => {
         fontWeight='bold'
       >
         <GridItem pl='2' bg='orange.300' area={'header'}>
-          Header
+          <Input type='text' value={query} placeholder='Search...' onChange={handleSearchChange}>
+          </Input>
+
         </GridItem>
         <GridItem pl='2' bg='pink.300' area={'nav'}>
         <CategoryViewNav onCategoryClick={handleCategoryClick} />
