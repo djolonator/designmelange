@@ -5,11 +5,10 @@ import { DesignItem } from '../../lib/types/models';
 
 interface PostersViewProps {
   designs: DesignItem[];
-  whatToDisplay: string;
   handleLoadMoreDesignsClick: () => void                           //'categories' | 'search' | 'bestSellers'    //make constant
 }
 
-const PostersViewMain: React.FC<PostersViewProps> = ({designs, whatToDisplay, handleLoadMoreDesignsClick}) =>{
+const PostersViewMain: React.FC<PostersViewProps> = ({designs, handleLoadMoreDesignsClick}) =>{
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

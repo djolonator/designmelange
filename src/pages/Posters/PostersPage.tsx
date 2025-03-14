@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Grid, GridItem, Input } from '@chakra-ui/react';
 import PostersViewMain from './PostersViewMain';
 import CategoryViewNav from './CategoryViewNav';
@@ -8,88 +8,98 @@ import {designsByCategory, bestsellersDesigns, designsSearch} from '../../lib/ut
 
 const PostersPage: React.FC = () => {
 
-  const [selectedCategory, setSelectedCategory] = useState<CategoryItem>();
+  const [selectedCategory, setSelectedCategory] = useState<CategoryItem>({designCategoryId:0, designCategoryName:'', designCount:0});
 
   const [designs, setDesigns] = useState<DesignItem[]>([]);
 
 
-  const [query, setQuery] = useState(''); // Store search query
+  const [query, setQuery] = useState('');
 
-  const [whatToDisplay, setWhatToDisplay] = useState('bestSellers');
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const [whatToDisplay, setWhatToDisplay] = useState(2);  //enum 2 bestsellers, 3 search, 1 category
 
   const [page, setPage] = useState(0);
+  let debounceTimer: NodeJS.Timeout | null = null;
 
   const handleCategoryClick = (category: CategoryItem) => {
-    if (category.designCategoryId !== selectedCategory?.designCategoryId){
+    if (category.designCategoryId !== selectedCategory.designCategoryId){
       setQuery('');
+      setDebouncedQuery('');
       setDesigns([]);
       setPage(0); 
-      setSelectedCategory(category);
+      setWhatToDisplay(1);
     }
+    setSelectedCategory(category);
   };
 
   const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setQuery(e.target.value);
-    setPage(0); 
-    setSelectedCategory({designCategoryId:0,
+    // setSelectedCategory({designCategoryId:0,
+    //   designCategoryName:'',
+    //   designCount:0
+    // });
+    let term = e.target.value.toString();
+    if (term.length == 0){
+      setWhatToDisplay(2);
+    }
+    else{
+      setWhatToDisplay(3);
+    }
+    setQuery(term);
+    setPage(0);
+    
+    
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+
+    debounceTimer = setTimeout(() => {
+      setSelectedCategory({designCategoryId:0,
       designCategoryName:'',
       designCount:0
     });
+      setDebouncedQuery(e.target.value); 
+    }, 500); 
   };
 
   const handleLoadMoreDesignsClick =() => {
     setPage(page+1);
-  }
+  };
+
+  const fetchDesigns = async () => {
+    
+    let response;
+    let data: DesignItem[];
+    switch (whatToDisplay) {
+      case 1:
+        response = await designsByCategory(selectedCategory!.designCategoryId, page);
+        data = await response.json();
+        break;
+      case 2:
+        response = await bestsellersDesigns(page);
+        data = await response.json();
+        break;
+      case 3:
+        response = await designsSearch(page, debouncedQuery);
+        data = await response.json();
+        
+        break;
+      default:
+        console.log("Value is unknown");
+        break;
+    }
+
+    setDesigns(prevDesigns => page === 0 ? data : [...prevDesigns, ...data]);
+  };
 
   useEffect(() => {
-      if (selectedCategory && selectedCategory.designCategoryId !== 0) {
-        const fetchDesignsByCategory = async () => {
-          try {
-            const designsByCategoryResponse = await designsByCategory(selectedCategory.designCategoryId, page);
-            const designsByCategoryData = await designsByCategoryResponse.json();
-            setDesigns(prevDesigns => page === 0 ? designsByCategoryData : [...prevDesigns, ...designsByCategoryData]); 
-          } catch (error) {
-            
-          } finally {
-            
-          }
-        };
-        if (selectedCategory.designCount - designs.length > 0){
-          //setQuery('');
-          fetchDesignsByCategory();
-        }
-      }
-      else if (query !== ''){
-        const fetchData = async () => {
-          try {
-            const searchDesignsByTermResponse = await designsSearch(page, query);
-            const searchDesignsByTermDesignsData = await searchDesignsByTermResponse.json();
-            setDesigns(prevDesigns => page === 0 ? searchDesignsByTermDesignsData : [...prevDesigns, ...searchDesignsByTermDesignsData]); 
-          } catch (error) {
-           
-          } finally {
-         ;
-          }
-        };
-        const debounceTimeout = setTimeout(fetchData, 500);
-        clearTimeout(debounceTimeout);
-        
-      }
-      else{
-        const fetchBestsellersDesigns = async () => {
-          try {
-            const bestsellersDesignsResponse = await bestsellersDesigns(page);
-            const bestsellersDesignsData = await bestsellersDesignsResponse.json();
-            setDesigns(prevDesigns => page === 0 ? bestsellersDesignsData : [...prevDesigns, ...bestsellersDesignsData]); 
-          } catch (error) {
-            
-          } finally {
-            
-          }
-        }; 
-        fetchBestsellersDesigns();
-      }
-    }, [page, selectedCategory, query]);
+
+    console.log('page',page );
+    console.log('whatToDisplay', whatToDisplay);
+    console.log('debouncedQuery',debouncedQuery );
+    console.log('', );
+    fetchDesigns();
+    }, [page, selectedCategory, debouncedQuery]);
 
   return (
     <Box w="100%">
@@ -124,7 +134,7 @@ const PostersPage: React.FC = () => {
         <CategoryViewNav onCategoryClick={handleCategoryClick} />
         </GridItem>
         <GridItem pl='2' bg='green.300' area={'main'}>
-          <PostersViewMain designs={designs} whatToDisplay={whatToDisplay} handleLoadMoreDesignsClick={handleLoadMoreDesignsClick}></PostersViewMain>
+          <PostersViewMain designs={designs} handleLoadMoreDesignsClick={handleLoadMoreDesignsClick}></PostersViewMain>
         </GridItem>
         <GridItem pl='2' bg='blue.300' area={'footer'}>
           Footer
