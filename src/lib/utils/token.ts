@@ -37,13 +37,8 @@ export const token = async () => {
 
     const expiresAt = localStorage.getItem("expiresAt");
 
-    if (expiresAt){
-        if(isTokenExpired(Number(expiresAt))){
-            await getRefreshToken();
-        }
-    }
-    else{
-       await getToken();
+    if (expiresAt && isTokenExpired(Number(expiresAt))){
+        await getToken();
     }
     return localStorage.getItem("accessToken");
   
