@@ -19,7 +19,7 @@ const PostersViewMain: React.FC<PostersViewProps> = ({designs, handleLoadMoreDes
 
   return (
     <Box>
-      <SimpleGrid columns={[2, null, 3]} spacing='20px'>
+      <SimpleGrid columns={[2, null, 3]} spacing='10px'>
         {designs.length > 0 ? (
           designs.map(design => <DesignCard key={design.designId} design={design} />)
         ) : (

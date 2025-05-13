@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
 import Header from './Header';
 import Footer from './Footer';
 import {isUserAuthenticated} from '../lib/utils/auth';
@@ -25,13 +25,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <Box>
       <Header />
-      <Box 
-        maxW={{ base: "100%", md: "100%", lg: "100%", xl: "70%" }} 
+      <Container
+        maxW={{ base: "100%", md: "100%", lg: "100%", xl: "70%"}} 
         mx="auto" 
         p={10}
       >
         {children}
-      </Box>
+      </Container>
       <Footer />
     </Box>
   );

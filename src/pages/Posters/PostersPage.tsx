@@ -123,15 +123,14 @@ const PostersPage: React.FC = () => {
         <GridItem pl='2' bg='orange.300' area={'header'}>
           <Input type='text' value={query} placeholder='Search...' onChange={handleSearchChange}>
           </Input>
-
         </GridItem>
         <GridItem pl='2' bg='pink.300' area={'nav'}>
         <CategoryViewNav onCategoryClick={handleCategoryClick} />
         </GridItem>
-        <GridItem pl='2' bg='green.300' area={'main'}>
+        <GridItem p='2' bg='green.300' area={'main'}>
           <PostersViewMain designs={designs} handleLoadMoreDesignsClick={handleLoadMoreDesignsClick}></PostersViewMain>
         </GridItem>
-        <GridItem pl='2' bg='blue.300' area={'footer'}>
+        <GridItem p='2' bg='blue.300' area={'footer'}>
           Footer
         </GridItem>
       </Grid>
