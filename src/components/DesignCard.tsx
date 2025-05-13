@@ -11,16 +11,15 @@ const DesignCard: React.FC<DesignCardProps> = ({design}) => {
 
   const navigate = useNavigate();
 
-
   const handleBuyClick = () => {
     navigate(`/posters/${design.designId}`);
   }
 
   return (
-    <Card maxW="sm">
+    <Card maxW='sm'>
       <CardBody>
         <Image
-          src="https://i.ibb.co/vBmRCwb/Moscow.jpg"
+          src='https://i.ibb.co/vBmRCwb/Moscow.jpg'
           alt="Green double couch with wooden legs"
           borderRadius="lg"
         />
@@ -33,14 +32,14 @@ const DesignCard: React.FC<DesignCardProps> = ({design}) => {
       </CardBody>
       <Divider />
       <CardFooter>
-        <ButtonGroup spacing="1">
+       
           <Button onClick={handleBuyClick} variant="ghost" colorScheme="blue">
             Buy now
           </Button>
           <Button variant="ghost" colorScheme="blue">
             Wishlist-like
           </Button>
-        </ButtonGroup>
+      
       </CardFooter>
     </Card>
   );
