@@ -8,7 +8,7 @@ const isTokenExpired = (expiryTime:number) => {
 
 const getToken = async ()  =>{
     const userEmail = localStorage.getItem('userEmail');
-    const userPassword = localStorage.getItem('userPassword');         //this is set, todo
+    const userPassword = localStorage.getItem('userPassword');         
 
     const loginReposnse = await login(userEmail!, userPassword!);
     const loginReposnseJson = await loginReposnse.json();
@@ -18,7 +18,7 @@ const getToken = async ()  =>{
 }
 
 const getRefreshToken = async() =>{
-    const refreshToken = localStorage.getItem("refreshToken");      //this is set, todo
+    const refreshToken = localStorage.getItem("refreshToken");     
 
     const refreshResponse = await refresh(refreshToken!);
     const refreshResponseJson = await refreshResponse.json();
@@ -28,7 +28,7 @@ const getRefreshToken = async() =>{
 
 const setToken = (accessToken:string,expiresIn:number, refreshToken:string ) => {
     localStorage.setItem("accessToken",accessToken);
-    const expiresInString = Date.now() + (expiresIn - 60) * 1000;       //removed 60 sec 
+    const expiresInString = Date.now() + (expiresIn - 60) * 1000;      
     localStorage.setItem("expiresAt", expiresIn.toString());
     localStorage.setItem("refreshToken", refreshToken);
 }
@@ -40,7 +40,7 @@ export const token = async () => {
     console.log("isTokenExpired", isTokenExpired(Number(expiresAt)));
     if (expiresAt && isTokenExpired(Number(expiresAt))){
 
-        const refreshToken = localStorage.getItem("refreshToken");      //this is set, todo
+        const refreshToken = localStorage.getItem("refreshToken"); 
         const refreshResponse = await refresh(refreshToken!);
 
         if (refreshResponse.status === 200){
