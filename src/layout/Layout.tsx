@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Box } from '@chakra-ui/react';
 import Header from './Header';
 import Footer from './Footer';
@@ -12,8 +12,14 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const navigate = useNavigate();
-  if (!isUserAuthenticated()){
-    navigate('/login');
+  useEffect(() => {
+    if (!isUserAuthenticated()) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  if (!isUserAuthenticated()) {
+    return null; // dunno if this needed; prevent rendering while redirecting
   }
 
   return (

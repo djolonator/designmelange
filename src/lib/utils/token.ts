@@ -36,9 +36,20 @@ const setToken = (accessToken:string,expiresIn:number, refreshToken:string ) => 
 export const token = async () => {
 
     const expiresAt = localStorage.getItem("expiresAt");
-
+    console.log("expiresAt", expiresAt);
+    console.log("isTokenExpired", isTokenExpired(Number(expiresAt)));
     if (expiresAt && isTokenExpired(Number(expiresAt))){
-        await getToken();
+
+        const refreshToken = localStorage.getItem("refreshToken");      //this is set, todo
+        const refreshResponse = await refresh(refreshToken!);
+
+        if (refreshResponse.status === 200){
+            const refreshResponseJson = await refreshResponse.json();
+            setToken(refreshResponseJson.accessToken, refreshResponseJson.expiresIn, refreshResponseJson.refreshToken);
+        }else{
+            await getToken();
+        }
+        
     }
     return localStorage.getItem("accessToken");
   

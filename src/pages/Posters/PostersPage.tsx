@@ -93,11 +93,6 @@ const PostersPage: React.FC = () => {
   };
 
   useEffect(() => {
-
-    console.log('page',page );
-    console.log('whatToDisplay', whatToDisplay);
-    console.log('debouncedQuery',debouncedQuery );
-    console.log('', );
     fetchDesigns();
     }, [page, selectedCategory, debouncedQuery]);
 
