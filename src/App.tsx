@@ -12,12 +12,14 @@ import PosterDetailPage from './pages/posterDetail/PosterDetailPage'
 import CheckoutPage from './pages/checkout/CheckoutPage';
 import { Bounce, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import OrderPage from './pages/orders/OrdersPage';
 const App: React.FC = () => {
   return (
     <>
     <Router>
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
+        <Route path="/orders" element={<Layout><OrderPage /></Layout>} />
         <Route path="/about" element={<Layout><About /></Layout>} />
         <Route path="/contact" element={<Layout><Contact /></Layout>} />
         <Route path="/posters" element={<Layout><Posters /></Layout>} />

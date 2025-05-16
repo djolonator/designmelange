@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
                 Contact Us
               </Link>
             </RouterLink>
-            <RouterLink to="/track-order" style={{ textDecoration: "none" }}>
+            <RouterLink to="/orders" style={{ textDecoration: "none" }}>
               <Link color="white" _hover={{ textDecoration: "underline" }}>
                 Track Order
               </Link>

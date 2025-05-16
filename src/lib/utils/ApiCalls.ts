@@ -178,3 +178,17 @@ export const designsSearch = async (
   );
   return response;
 };
+
+export const orders = async () => {
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL + "/orders",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${await token()}`,
+      },
+    }
+  );
+  return response;
+};

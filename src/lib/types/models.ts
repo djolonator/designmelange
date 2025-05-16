@@ -72,3 +72,21 @@ export type RecipientValidation = {
   cityIsValid: boolean,
   zipIsValid: boolean,
 }
+
+export type Order = {
+  printfullOrderId: number,
+  totalCost: number,
+  orderItem: OrderItem[]
+}
+
+export type OrderItem = {
+  quantity: number,
+  design: Design
+}
+
+export type Design = {
+  designName: string,
+  ImgUrl: string
+}
+
+
