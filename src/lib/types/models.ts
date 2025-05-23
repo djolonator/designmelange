@@ -76,7 +76,7 @@ export type RecipientValidation = {
 export type Order = {
   printfullOrderId: number,
   totalCost: number,
-  orderItem: OrderItem[]
+  orderItems: OrderItem[]
 }
 
 export type OrderItem = {

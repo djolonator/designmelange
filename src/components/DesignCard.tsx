@@ -19,7 +19,7 @@ const DesignCard: React.FC<DesignCardProps> = ({design}) => {
     <Card maxW='sm'>
       <CardBody>
         <Image
-          src='https://i.ibb.co/vBmRCwb/Moscow.jpg'
+          src='https://i.ibb.co/d01RC3Gs/Albert-Einstein-Silly-Portrait-LOW-RES.jpg'
           alt="Green double couch with wooden legs"
           borderRadius="lg"
         />
@@ -32,14 +32,12 @@ const DesignCard: React.FC<DesignCardProps> = ({design}) => {
       </CardBody>
       <Divider />
       <CardFooter>
-       
           <Button onClick={handleBuyClick} variant="ghost" colorScheme="blue">
             Buy now
           </Button>
           <Button variant="ghost" colorScheme="blue">
             Wishlist-like
           </Button>
-      
       </CardFooter>
     </Card>
   );
