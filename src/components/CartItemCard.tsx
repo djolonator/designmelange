@@ -35,7 +35,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({cartItem}) => {
     >
       <Image
         objectFit="cover"
-        src="https://i.ibb.co/vBmRCwb/Moscow.jpg"
+        src={cartItem.lowResImgUrl}
         alt=""
         boxSize='150px' 
       />

@@ -22,7 +22,7 @@ const OrderItemComponent: React.FC<OrderItemPropsProps> = ({ order }) => {
             <Avatar
               size="lg"
               borderRadius="0"
-              src="https://i.ibb.co/vBmRCwb/Moscow.jpg"
+              src="https://i.ibb.co/d01RC3Gs/Albert-Einstein-Silly-Portrait-LOW-RES.jpg"
             />
           ))}
         </HStack>

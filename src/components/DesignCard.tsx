@@ -19,7 +19,7 @@ const DesignCard: React.FC<DesignCardProps> = ({design}) => {
     <Card maxW='sm'>
       <CardBody>
         <Image
-          src='https://i.ibb.co/d01RC3Gs/Albert-Einstein-Silly-Portrait-LOW-RES.jpg'
+          src={design.lowResImgUrl}
           alt="Green double couch with wooden legs"
           borderRadius="lg"
         />

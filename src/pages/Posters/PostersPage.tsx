@@ -4,13 +4,13 @@ import PostersViewMain from './PostersViewMain';
 import CategoryViewNav from './CategoryViewNav';
 import { CategoryItem } from '../../lib/types/models'; 
 import { DesignItem } from '../../lib/types/models'; 
-import {designsByCategory, bestsellersDesigns, designsSearch} from '../../lib/utils/apiCalls'
+import {designsByCategory, bestsellersDesigns, designsSearch, designs} from '../../lib/utils/apiCalls'
 
 const PostersPage: React.FC = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryItem>({designCategoryId:0, designCategoryName:'', designCount:0});
 
-  const [designs, setDesigns] = useState<DesignItem[]>([]);
+  const [designsState, setDesignsState] = useState<DesignItem[]>([]);
 
 
   const [query, setQuery] = useState('');
@@ -26,7 +26,7 @@ const PostersPage: React.FC = () => {
     if (category.designCategoryId !== selectedCategory.designCategoryId){
       setQuery('');
       setDebouncedQuery('');
-      setDesigns([]);
+      setDesignsState([]);
       setPage(0); 
       setWhatToDisplay(1);
     }
@@ -76,7 +76,7 @@ const PostersPage: React.FC = () => {
         data = await response.json();
         break;
       case 2:
-        response = await bestsellersDesigns(page);
+        response = await designs(page);
         data = await response.json();
         break;
       case 3:
@@ -89,7 +89,7 @@ const PostersPage: React.FC = () => {
         break;
     }
 
-    setDesigns(prevDesigns => page === 0 ? data : [...prevDesigns, ...data]);
+    setDesignsState(prevDesigns => page === 0 ? data : [...prevDesigns, ...data]);
   };
 
   useEffect(() => {
@@ -128,7 +128,7 @@ const PostersPage: React.FC = () => {
         <CategoryViewNav onCategoryClick={handleCategoryClick} />
         </GridItem>
         <GridItem p='2' bg='green.300' area={'main'}>
-          <PostersViewMain designs={designs} handleLoadMoreDesignsClick={handleLoadMoreDesignsClick}></PostersViewMain>
+          <PostersViewMain designs={designsState} handleLoadMoreDesignsClick={handleLoadMoreDesignsClick}></PostersViewMain>
         </GridItem>
         <GridItem p='2' bg='blue.300' area={'footer'}>
           Footer

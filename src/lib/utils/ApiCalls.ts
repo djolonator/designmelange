@@ -192,3 +192,21 @@ export const orders = async () => {
   );
   return response;
 };
+
+export const designs = async (
+  page: number
+) => {
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL + "/designs" +
+     "?page=" +
+      page,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${await token()}`,
+      },
+    }
+  );
+  return response;
+};

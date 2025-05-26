@@ -8,15 +8,18 @@ export type DesignItem = {
   designName: string;
   description: string;
   designId: number;
-  designImgUrl: string;
-  designMockUrl: string;
+  mockImgUrl: string;
+  printImgUrl: string;
+  lowResImgUrl: string;
+  bfImgUrl: string;
 }
 
 export type CartItem = {
   designName: string,
   description: string,
   designId: number;
-  designImgUrl: string;
+  printImgUrl: string;
+  lowResImgUrl: string;
   productId: number;
   quantity: number;
 }

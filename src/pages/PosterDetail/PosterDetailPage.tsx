@@ -11,6 +11,7 @@ const PosterDetailPage: React.FC = () => {
   const { designId } = useParams<{ designId: string }>();
   const [design, setDesign] = useState<DesignItem | null>(null);
   const [selectedOption, setSelectedOption] = useState<number>(0);
+  const [imageUrl, setImgUrl] = useState<string | undefined>('');
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(Number(event.target.value));
   };
@@ -22,7 +23,8 @@ const PosterDetailPage: React.FC = () => {
         designName: design.designName,
         description: design.description,
         designId: design.designId,
-        designImgUrl: design.designImgUrl, 
+        printImgUrl: design.printImgUrl, 
+        lowResImgUrl: design.lowResImgUrl,
         productId: selectedOption,
         quantity: 1 
       };
@@ -32,6 +34,9 @@ const PosterDetailPage: React.FC = () => {
     }
   };
 
+  const handleImageClick = (url: string | undefined) => {
+    setImgUrl(url);
+  }
   
   useEffect(() => {
     const fetchDesign = async () => {
@@ -39,11 +44,13 @@ const PosterDetailPage: React.FC = () => {
         const response = await getDesign(designId!);
         const data = await response.json();
         setDesign(data);
+        setImgUrl(data?.lowResImgUrl);
       } catch (error) {
       } finally {
       }
     };
     fetchDesign();
+    
   }, [getDesign,designId]);
 
   return (
@@ -51,11 +58,12 @@ const PosterDetailPage: React.FC = () => {
       <Box bg="blue.500" p={4}>
         <Grid templateColumns="2fr 9fr" gap={1}>
           <Box>
-            <Image src="https://i.ibb.co/vBmRCwb/Moscow.jpg"></Image>
-            <Image src="https://i.ibb.co/vBmRCwb/Moscow.jpg"></Image>
+            <Image onClick={() => handleImageClick(design?.bfImgUrl)} src={design?.bfImgUrl}></Image>
+            <Image onClick={() => handleImageClick(design?.lowResImgUrl)} src={design?.lowResImgUrl}></Image>
+            <Image onClick={() => handleImageClick(design?.mockImgUrl)} src={design?.mockImgUrl}></Image>
           </Box>
           <Box>
-            <Image src="https://i.ibb.co/vBmRCwb/Moscow.jpg"></Image>
+            <Image src={imageUrl}></Image>
           </Box>
         </Grid>
       </Box>
