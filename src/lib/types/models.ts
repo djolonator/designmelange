@@ -89,7 +89,7 @@ export type OrderItem = {
 
 export type Design = {
   designName: string,
-  ImgUrl: string
+  lowResImgUrl: string
 }
 
 
