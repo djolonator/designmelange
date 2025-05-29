@@ -77,6 +77,7 @@ export type RecipientValidation = {
 }
 
 export type Order = {
+  orderId: number,
   printfullOrderId: number,
   totalCost: number,
   orderItems: OrderItem[]
@@ -90,6 +91,14 @@ export type OrderItem = {
 export type Design = {
   designName: string,
   lowResImgUrl: string
+}
+
+export type OrderDetailsModel = {
+  status: string,
+  shipping: string,
+  shippingServiceName: string,
+  recipient: Recipient,
+  trackingUrls: string[],
 }
 
 

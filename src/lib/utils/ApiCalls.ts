@@ -210,3 +210,20 @@ export const designs = async (
   );
   return response;
 };
+
+export const getOrderDetails = async (
+  orderId:number
+) => {
+  const response = await fetch(
+    process.env.REACT_APP_API_BASE_URL + "/orderDetail" + 
+    '?orderId=' + orderId,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${await token()}`,
+      },
+    }
+  );
+  return response;
+};

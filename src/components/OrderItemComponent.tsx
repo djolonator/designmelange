@@ -31,7 +31,7 @@ const OrderItemComponent: React.FC<OrderItemPropsProps> = ({ order }) => {
           <StatLabel>Total Cost</StatLabel>
           <StatNumber>${order.totalCost}</StatNumber>
         </Stat>
-        <OrderDetailModal></OrderDetailModal>
+        <OrderDetailModal orderId={order.orderId}></OrderDetailModal>
       </Card>
     </>
   );
