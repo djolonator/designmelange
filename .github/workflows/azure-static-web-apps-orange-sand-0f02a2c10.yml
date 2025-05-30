@@ -36,9 +36,8 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ORANGE_SAND_0F02A2C10 }}
           action: "upload"
-          app_location: "/"
-          output_location: "build"
           skip_app_build: true
+          app_location: "build"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
