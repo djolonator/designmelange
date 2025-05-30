@@ -4,7 +4,7 @@ import PostersViewMain from './PostersViewMain';
 import CategoryViewNav from './CategoryViewNav';
 import { CategoryItem } from '../../lib/types/models'; 
 import { DesignItem } from '../../lib/types/models'; 
-import {designsByCategory, bestsellersDesigns, designsSearch, designs} from '../../lib/utils/apiCalls'
+import {designsByCategory, bestsellersDesigns, designsSearch, designs} from '../../lib/utils/ApiCalls'
 
 const PostersPage: React.FC = () => {
 

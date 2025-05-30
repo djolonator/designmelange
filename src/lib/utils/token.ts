@@ -1,5 +1,4 @@
-import {login} from './apiCalls'
-import {refresh} from './apiCalls'
+import {login, refresh} from './ApiCalls'
 
 //todo set state
 const isTokenExpired = (expiryTime:number) => {

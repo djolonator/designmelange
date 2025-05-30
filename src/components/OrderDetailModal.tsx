@@ -16,7 +16,7 @@ import {
   Divider,
   Text 
 } from "@chakra-ui/react";
-import { getOrderDetails } from "../../src/lib/utils/apiCalls";
+import { getOrderDetails } from "../../src/lib/utils/ApiCalls";
 import { OrderDetailsModel } from "../lib/types/models";
 
 interface OrderDetailModalProps {
