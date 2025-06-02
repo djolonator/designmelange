@@ -10,7 +10,7 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import ErrorMessagesForRegister from '../components/ErrorMessagesForRegister';
 import {ErrorResponse} from '../lib/types/models';
-import {register} from '../lib/utils/ApiCalls'
+import {register} from '../lib/utils/apiCalls'
 
 const Register: React.FC = () => {
   const [userCredentials, setUserCredentials] = useState({

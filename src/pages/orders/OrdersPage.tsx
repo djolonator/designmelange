@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { orders } from "../../lib/utils/ApiCalls";
+import { orders } from "../../lib/utils/apiCalls";
 import { Order } from '../../lib/types/models'; 
 import {Flex} from "@chakra-ui/react";
 import  OrderItemComponent  from "../../components/OrderItemComponent"

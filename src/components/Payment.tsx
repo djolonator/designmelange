@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
-import {initiatePaypallOrder,capturePaypallOrder} from '../lib/utils/ApiCalls'
+import {initiatePaypallOrder,capturePaypallOrder} from '../lib/utils/apiCalls'
 import { RootState } from '../lib/state/store';
 import { useNavigate } from "react-router";
 import { showToast } from "../lib/utils/toaster";

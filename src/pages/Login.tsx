@@ -8,7 +8,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from 'react-router-dom'; 
-import {login} from '../lib/utils/ApiCalls';
+import {login} from '../lib/utils/apiCalls';
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../lib/utils/toaster";
 

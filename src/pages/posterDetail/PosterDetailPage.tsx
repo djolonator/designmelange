@@ -5,7 +5,7 @@ import { DesignItem } from "../../lib/types/models";
 import { productVariantsSelect } from "../../lib/constants/constants";
 import { addItemToCart } from "../../lib/state/cartSlice";
 import { useDispatch } from "react-redux";
-import { getDesign } from "../../lib/utils/ApiCalls";
+import { getDesign } from "../../lib/utils/apiCalls";
 
 const PosterDetailPage: React.FC = () => {
   const { designId } = useParams<{ designId: string }>();
