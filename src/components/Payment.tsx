@@ -15,7 +15,6 @@ const Payment: React.FC = () => {
         "clientId": process.env.REACT_APP_CLIENT_ID_PP ? process.env.REACT_APP_CLIENT_ID_PP : "test",
         "enable-funding": "venmo",
         "disable-funding": "",
-        "buyer-country": "US",
         "currency": "USD",
         "data-page-type": "product-details",
         "components": "buttons",
