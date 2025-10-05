@@ -12,7 +12,7 @@ const Payment: React.FC = () => {
 //     return <p>{content}</p>;
 // }
     const initialOptions = {
-        "clientId": "test",
+        "clientId": process.env.CLIENT_ID_PP ? process.env.CLIENT_ID_PP : "test",
         "enable-funding": "venmo",
         "disable-funding": "",
         "buyer-country": "US",
